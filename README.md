@@ -44,7 +44,7 @@ is ignored.
 ### `camera` object
 
 Sets the initial camera placement (alternatively we can import the
-placement from the `FBX` if ArtiCAD exporter outputs it):
+placement from the `FBX`):
 
 + `position`: required, `[x, y, z]` coordinates, `z` axis is up.
 + `rotation`: required, `[yaw, pitch]` of the camera in degrees.
