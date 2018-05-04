@@ -2,7 +2,7 @@
 
 ## Archive structure.
 
-[Exampe archive](examples/cubes.zip)
+[Example archive](examples/cubes.zip)
 
 The API will accept a `.zip` archive file with the following content:
 
@@ -75,3 +75,51 @@ Each instance has the following properties:
 
 [More detailed description of light
 properties](https://www.shapespark.com/docs#lights-tab)
+
+# The API for importing the model.
+
+[A script demonstrating how to use the API](api_usage_example.py).
+
+To import the `.zip` archive with the model three HTTP requests need to be made.
+
+## POST import-upload-init request.
+
+This is an HTTP POST requests to
+`https://cloud.shapespark.com/scenes/[SCENE_NAME]/import-upload-init/`
+
+`SCENE_NAME` can use lowercase letters (`a-z`), digits (`0-9`) and
+sepearators (`_` and `-`).
+
+The request must include the HTTP `Authorization` header with the user
+name and the secret token. The username and the token will be created
+during the user registration (initially manualy).
+
+For testing the user name and the token from the
+`Users\[USER_NAME]\AppData\Shapespark\auth` file can be used.
+
+
+The result of the request is the following JSON object:
+
+
+    {
+      'uploadUrl': SIGNED_GOOGLE_STORAGE_BUCKET_URL
+    }
+
+## PUT request
+
+The content of the `.zip` archive is uploaded with HTTP PUT request to
+the `uploadUrl` returned by the `import-upload-init` request.
+
+`uploadUrl` already contains signed authorization data, so no
+additional authorization header is needed.
+
+## POST import-upload-done
+
+Last request is HTTP POST to
+`https://cloud.shapespark.com/scenes/[SCENE_NAME]/import-upload-done`
+The request needs to be sent after the PUT request to the Google
+storage bucket finishes and instructs the server to start the import
+process.
+
+This request must also include the `Authorization` header with the
+same data as the `import-upload-init` request.

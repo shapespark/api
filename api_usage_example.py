@@ -3,7 +3,7 @@ import sys
 
 import requests
 
-SHAPESPARK_ROOT_URL = 'https://cloud.shapespark.com'
+SHAPESPARK_ROOT_URL = 'http://cloud.shapespark.com'
 
 def usage():
     print("""
@@ -62,12 +62,12 @@ def main():
 
     (username, token) = read_text_file(token_path).split(' ')
 
-    url = '{0}/scenes/{1}/import-init'.format(SHAPESPARK_ROOT_URL, scene_name)
-    response = requests.post(url, json={},
-                             auth=(username, token),
+    url = '{0}/scenes/{1}/import-upload-init'.format(
+        SHAPESPARK_ROOT_URL, scene_name)
+    response = requests.post(url,auth=(username, token),
                              verify=True)
     if response.status_code != 200:
-        raise Exception('POST import-init failed: {0}, {1}'.format(
+        raise Exception('POST import-upload-init failed: {0}, {1}'.format(
             response.status_code, response.text))
 
     put_url = response.json()['uploadUrl']
@@ -75,6 +75,14 @@ def main():
     response = requests.put(put_url, data=data)
     if response.status_code != 200:
         raise Exception('PUT failed: {0}, {1}'.format(
+            response.status_code, response.text))
+
+    url = '{0}/scenes/{1}/import-upload-done'.format(
+        SHAPESPARK_ROOT_URL, scene_name)
+    response = requests.post(url,auth=(username, token),
+                             verify=True)
+    if response.status_code != 200:
+        raise Exception('POST import-upload-done failed: {0}, {1}'.format(
             response.status_code, response.text))
 
 main()
