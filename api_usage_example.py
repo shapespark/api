@@ -3,7 +3,7 @@ import sys
 
 import requests
 
-SHAPESPARK_ROOT_URL = 'http://cloud.shapespark.com'
+SHAPESPARK_ROOT_URL = 'https://cloud.shapespark.com'
 
 def usage():
     print("""
