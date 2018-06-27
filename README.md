@@ -85,7 +85,7 @@ To import the `.zip` archive with the model three HTTP requests need to be made.
 ## POST import-upload-init request.
 
 This is an HTTP POST requests to
-`https://cloud.shapespark.com/scenes/[SCENE_NAME]/import-upload-init/`
+`https://cloud.shapespark.com/scenes/[SCENE_NAME]/import-upload-init`
 
 `SCENE_NAME` can use lowercase letters (`a-z`), digits (`0-9`) and
 sepearators (`_` and `-`).
