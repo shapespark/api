@@ -44,11 +44,11 @@ def main():
         if opt in ('-h', '--help'):
             usage()
         elif opt in ('-m', '--model'):
-            model_path = arg;
+            model_path = arg
         elif opt in ('-s', '--scene'):
-            scene_name = arg;
+            scene_name = arg
         elif opt in ('-t', '--token'):
-            token_path = arg;
+            token_path = arg
         else:
             assert False, 'unhandled option'
 

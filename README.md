@@ -4,7 +4,7 @@
 
 [Example archive](examples/cubes.zip)
 
-The API will accept a `.zip` archive file with the following content:
+The API accepts a `.zip` archive file with the following content:
 
 + **[any name].fbx** - the geometry and materials (optionally also lights and
 the camera position).
@@ -13,7 +13,7 @@ the camera position).
 
 + **textures files** - can be placed in the archive root directory or
 a sub-directory. If sub-directory is used the paths in the `FBX` and
-`extras.json` will need to include the sub-directory. Preferably `.jpg`
+`extras.json` needs to include the sub-directory. Preferably `.jpg`
 and `.png` files but can be also `.tif`, `.bmp` and `.tga`. If
 possible all lowercase texture names will reduce troubles (but not a
 necessity).
@@ -78,7 +78,7 @@ properties](https://www.shapespark.com/docs#lights-tab)
 
 # The API for importing the model.
 
-[A script demonstrating how to use the API](api_usage_example.py).
+[A script demonstrating how to use the API](scene_creation_example.py).
 
 To import the `.zip` archive with the model three HTTP requests need to be made.
 
@@ -91,8 +91,8 @@ This is an HTTP POST requests to
 sepearators (`_` and `-`).
 
 The request must include the HTTP `Authorization` header with the user
-name and the secret token. The username and the token will be created
-during the user registration (initially manualy).
+name and the secret token. The username and the token are created
+during the user registration.
 
 For testing the user name and the token from the
 `Users\[USER_NAME]\AppData\Shapespark\auth` file can be used.
@@ -123,3 +123,103 @@ process.
 
 This request must also include the `Authorization` header with the
 same data as the `import-upload-init` request.
+
+# The API for listing and deleting user's scenes.
+
+## GET a list of user's scenes
+
+GET request with the HTTP `Authorization` header that contains the
+user name and the user token to `https://cloud.shapespark.com/scenes/`
+returns a JSON list with
+
+    {
+      'name': SCENE_NAME,
+      'SceneUrl': SCENE_URL
+    }
+
+entries that list all the scenes created by the user.
+
+## DELETE a user scene
+
+DELETE request (also with the user `Authorization` header) to
+`https://cloud.shapespark.com/scenes/SCENE_NAME/` deletes a scene
+created by the user.
+
+# The API for managing users.
+
+[A script demonstrating how to use the user management
+API](user_management_example.py).
+
+All user management request need to include the HTTP `Authorization`
+header that contains a `client_id` and a `client_secret_admin_token`.
+
+This admin token should never passed to end users, because it allows
+to perform operations that affect all users.
+
+A client is able to manage and see information only about users
+created by this client.
+
+## Create a new user.
+
+POST request to `https://cloud.shapespark.com/users/` creates a new
+user. The request needs to include a JSON like:
+
+    {
+      'username': 'alice',
+      'email': 'alice@example.org'
+    }
+
+Username can contain lower case letters and digits that can be
+separated by `_` or `-`.
+
+
+The result of the request is a JSON object:
+
+
+    {
+      'token': USER_SCENE_CREATION_TOKEN
+    }
+
+The returned token can be passed to the user's machine to allow the
+user to create scenes.
+
+The request can also return 400 error if the username or email already
+exist or are invalid.
+
+## List all users.
+
+GET request to `https://cloud.shapespark.com/users/` lists all users
+create by the client.
+
+Each list entry contains:
+
+    {
+      'username': string,
+      'active': True or False,
+      'sceneCount': integer, number of scenes created by the user
+    }
+
+## Deactivate a user.
+
+A user that cancels subscription should be deactivated with POST
+request to `https://cloud.shapespark.com/users/USERNAME/deactivate`.
+
+If the subscription is renewed, the user can be activated again with a
+POST request to `https://cloud.shapespark.com/users/USERNAME/activate`.
+
+## Get a list of scenes created by a user.
+
+GET request to `https://cloud.shapespark.com/users/USERNAME/scenes/
+returns a JSON list with following entries:
+
+    {
+      'name': SCENE_NAME,
+      'SceneUrl': SCENE_URL
+     }
+
+
+## Delete a scene created by a user.
+
+DELETE request to
+`https://cloud.shapespark.com/users/USERNAME/scenes/SCENE_NAME/`
+deletes a scene created by the user.
