@@ -195,8 +195,7 @@ Each list entry contains:
 
     {
       'username': string,
-      'active': True or False,
-      'sceneCount': integer, number of scenes created by the user
+      'active': True or False
     }
 
 ## Deactivate a user.

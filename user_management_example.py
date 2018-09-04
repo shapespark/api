@@ -70,8 +70,8 @@ def main():
     else:
         print("All users list:")
         for user in response.json():
-            print("   username: {0}; active: {1}; scene count: {2}".
-                  format(user['username'], user['active'], user['sceneCount']));
+            print("   username: {0}; active: {1};".
+                  format(user['username'], user['active']));
 
 
     # Deactivate the user (for example: subscription canceled).
