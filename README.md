@@ -134,7 +134,7 @@ returns a JSON list with
 
     {
       'name': SCENE_NAME,
-      'SceneUrl': SCENE_URL
+      'sceneUrl': SCENE_URL
     }
 
 entries that list all the scenes created by the user.
@@ -189,7 +189,7 @@ exist or are invalid.
 ## List all users.
 
 GET request to `https://cloud.shapespark.com/users/` lists all users
-create by the client.
+created by the client.
 
 Each list entry contains:
 
@@ -213,7 +213,7 @@ returns a JSON list with following entries:
 
     {
       'name': SCENE_NAME,
-      'SceneUrl': SCENE_URL
+      'sceneUrl': SCENE_URL
      }
 
 
