@@ -3,7 +3,8 @@
     {
       "name" : "Material.001",
       "roughness" : 0.7,
-      "metallic": 1.0
+      "metallic": 1.0,
+      "emissionStrength": 3.0
     },
     {
       "name" : "Material.002",
@@ -29,7 +30,8 @@
       2.12724633474494,
       -4.70870534788822,
       3.26262641922762
-    ]
+    ],
+    "fov": 66
   },
 
   "lights" : [

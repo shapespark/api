@@ -37,6 +37,8 @@ is ignored.
 + `bumpTexture`: optional.
 + `bumpScale`: optional, in `[0-1]` range, used when `bumpTexture`
   property is set to scale it.
++ `emissionStrength`: optional, in `[0-1000]` range, if set the
+material emits light.
 
 [More detailed description of `roughness`, `metallic` and
 `bump`](https://www.shapespark.com/docs#materials-tab).
@@ -48,6 +50,7 @@ placement from the `FBX`):
 
 + `position`: required, `[x, y, z]` coordinates, `z` axis is up.
 + `rotation`: required, `[yaw, pitch]` of the camera in degrees.
++ `fov`: optional, field of view in degrees.
 
 ### `lights` list
 
