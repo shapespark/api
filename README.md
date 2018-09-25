@@ -105,7 +105,7 @@ The result of the request is the following JSON object:
 
 
     {
-      'uploadUrl': SIGNED_GOOGLE_STORAGE_BUCKET_URL
+      "uploadUrl": SIGNED_GOOGLE_STORAGE_BUCKET_URL
     }
 
 ## PUT request
@@ -136,8 +136,8 @@ user name and the user token to `https://cloud.shapespark.com/scenes/`
 returns a JSON list with
 
     {
-      'name': SCENE_NAME,
-      'sceneUrl': SCENE_URL
+      "name": SCENE_NAME,
+      "sceneUrl": SCENE_URL
     }
 
 entries that list all the scenes created by the user.
@@ -168,8 +168,8 @@ POST request to `https://cloud.shapespark.com/users/` creates a new
 user. The request needs to include a JSON like:
 
     {
-      'username': 'alice',
-      'email': 'alice@example.org'
+      "username": "alice",
+      "email": "alice@example.org"
     }
 
 Username can contain lower case letters and digits that can be
@@ -180,7 +180,7 @@ The result of the request is a JSON object:
 
 
     {
-      'token': USER_SCENE_CREATION_TOKEN
+      "token": USER_SCENE_CREATION_TOKEN
     }
 
 The returned token can be passed to the user's machine to allow the
@@ -197,8 +197,8 @@ created by the client.
 Each list entry contains:
 
     {
-      'username': string,
-      'active': True or False
+      "username": string,
+      "active": True or False
     }
 
 ## Deactivate a user.
@@ -215,8 +215,8 @@ GET request to `https://cloud.shapespark.com/users/USERNAME/scenes/
 returns a JSON list with following entries:
 
     {
-      'name': SCENE_NAME,
-      'sceneUrl': SCENE_URL
+      "name": SCENE_NAME,
+      "sceneUrl": SCENE_URL
      }
 
 
