@@ -146,10 +146,17 @@ returns a JSON list with
 
     {
       "name": SCENE_NAME,
-      "sceneUrl": SCENE_URL
+      "sceneUrl": SCENE_URL,
+      "assetsUrl", SCENE_ASSETS_URL
     }
 
 entries that list all the scenes created by the user.
+
+`assetsUrl` can be used to access the scene:
+
++ 320x180 thumbnail: `SCENE_ASSETS_URL + 'thumbnail.jpg'`
++ 1920x1080 cover image: `SCENE_ASSETS_URL + 'cover.jpg'`
++ favicon: `SCENE_ASSETS_URL + 'favicon.ico'`
 
 ## DELETE a user scene
 
