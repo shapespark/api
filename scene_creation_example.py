@@ -84,5 +84,7 @@ def main():
     if response.status_code != 200:
         raise Exception('POST import-upload-done failed: {0}, {1}'.format(
             response.status_code, response.text))
-
+    else:
+        print('Model uploaded for import. Wait for the import to finish at {0}'
+              .format(response.json()['watchUrl']))
 main()
