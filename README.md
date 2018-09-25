@@ -169,7 +169,8 @@ user. The request needs to include a JSON like:
 
     {
       "username": "alice",
-      "email": "alice@example.org"
+      "email": "alice@example.org",
+      "onlyValidate": false
     }
 
 Username can contain lower case letters and digits that can be
@@ -188,6 +189,18 @@ user to create scenes.
 
 The request can also return 400 error if the username or email already
 exist or are invalid.
+
+If an optional `onlyValidate` parameter is present and set to `true`,
+the request doesn't create a new user, but checks if such user can be
+created - the username and email are correct and not yet used. If the
+user can be created the validation request returns HTTP 204 success
+code, otherwise it returns 400 error code with a JSON that includes
+the failure reason, like:
+
+    {
+      "message": "Username already in use"
+    }
+
 
 ## List all users.
 

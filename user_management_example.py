@@ -51,7 +51,8 @@ def main():
     # Create a test user.
     data = {
         'username': 'api-test',
-        'email': 'api-test@shapespark.com'
+        'email': 'api-test@shapespark.com',
+        'onlyValidate': False
     }
     url = SHAPESPARK_ROOT_URL + '/users/'
     response = requests.post(url, json=data, auth=(client_id, token))
