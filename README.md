@@ -127,6 +127,15 @@ process.
 This request must also include the `Authorization` header with the
 same data as the `import-upload-init` request.
 
+The request returns a JSON:
+
+    {
+      "watchUrl": URL_TO_WAIT_FOR_THE_IMPORT_TO_FINISH
+    }
+
+The returned URL can be opened in a web browser and it will
+redirect the user to the scene after the import is finished.
+
 # The API for listing and deleting user's scenes.
 
 ## GET a list of user's scenes
