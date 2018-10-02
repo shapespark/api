@@ -142,15 +142,28 @@ redirect the user to the scene after the import is finished.
 
 GET request with the HTTP `Authorization` header that contains the
 user name and the user token to `https://cloud.shapespark.com/scenes/`
-returns a JSON list with
+returns a JSON list with items like:
 
     {
       "name": SCENE_NAME,
       "sceneUrl": SCENE_URL,
-      "assetsUrl", SCENE_ASSETS_URL
+      "assetsUrl", SCENE_ASSETS_URL,
+      "watchUrl": URL_TO_WAIT_FOR_THE_IMPORT_TO_FINISH
     }
 
-entries that list all the scenes created by the user.
++ `name` is always present
++ `watchUrl` is present only if the scene import is currently in progress.
++ `sceneUrl` and `assetsUrl` are present only if the scene was successfully imported at least once.
+
+If import is being run again for the scene that already exists, the
+entry will include all three: `watchUrl`, `sceneUrl` and
+`assetsUrl`. As long as the `watchUrl` is present, the last import
+still runs and `sceneUrl` and `assetsUrl` point to the previously
+imported version of the scene. When import finishes, `watchUrl` is no
+longer returned and `sceneUrl` and `assetsUrl` point to the newest
+version of the scene.
+
+
 
 `assetsUrl` can be used to access the scene:
 
