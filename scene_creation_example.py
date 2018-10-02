@@ -64,8 +64,7 @@ def main():
 
     url = '{0}/scenes/{1}/import-upload-init'.format(
         SHAPESPARK_ROOT_URL, scene_name)
-    response = requests.post(url,auth=(username, token),
-                             verify=True)
+    response = requests.post(url,auth=(username, token), verify=True)
     if response.status_code != 200:
         raise Exception('POST import-upload-init failed: {0}, {1}'.format(
             response.status_code, response.text))
@@ -79,12 +78,26 @@ def main():
 
     url = '{0}/scenes/{1}/import-upload-done'.format(
         SHAPESPARK_ROOT_URL, scene_name)
-    response = requests.post(url,auth=(username, token),
-                             verify=True)
+    response = requests.post(url,auth=(username, token), verify=True)
     if response.status_code != 200:
         raise Exception('POST import-upload-done failed: {0}, {1}'.format(
             response.status_code, response.text))
     else:
         print('Model uploaded for import. Wait for the import to finish at {0}'
               .format(response.json()['watchUrl']))
+
+    # Get a list of users scenes:
+    url = '{0}/scenes/'.format(SHAPESPARK_ROOT_URL)
+    response = requests.get(url,auth=(username, token), verify=True)
+    if response.status_code != 200:
+        raise Exception('GET a list of scenes failed: {0}, {1}'.format(
+            response.status_code, response.text))
+
+    for scene in response.json():
+        print(('  Scene: {0}\n\t watchUrl: {1}\n\t sceneUrl: {2}\n\t ' +
+               'assetsUrl: {3}').format(scene.get('name'),
+                                        scene.get('watchUrl', 'none'),
+                                        scene.get('sceneUrl', 'none'),
+                                        scene.get('assetsUrl', 'none')))
+
 main()
