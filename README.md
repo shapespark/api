@@ -51,6 +51,7 @@ placement from the `FBX`):
 + `position`: required, `[x, y, z]` coordinates, `z` axis is up.
 + `rotation`: required, `[yaw, pitch]` of the camera in degrees.
 + `fov`: optional, field of view in degrees.
++ `exposure`: optional, camera exposure in `[-3,3]` range, defaults to `0`.
 
 ### `lights` list
 
