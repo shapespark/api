@@ -80,6 +80,14 @@ Each instance has the following properties:
 [More detailed description of light
 properties](https://www.shapespark.com/docs#lights-tab)
 
+### `sky` object
+
+'sky' is an optional object that can be included to change the
+default sky strength.
+
++ `strength`: optional, 0-100 sky strength that is used for baking,
+defaults to 6.
+
 # The API for importing the model.
 
 [A script demonstrating how to use the API](scene_creation_example.py).
