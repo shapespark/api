@@ -274,6 +274,24 @@ HTTP 200 code is returned together with a JSON object:
 
 After the request is made the previous token stops working.
 
+## Change a user email.
+
+A post request to
+`https://cloud.shapespark.com/users/USERNAME/change-email` changes the
+user email. The request needs to include a JSON with a new email:
+
+    {
+      "email": "alice@example.org",
+    }
+
+On success the request returns HTTP 204 code. On error the request
+returns 400 error code with a JSON that described the failure reason,
+like:
+
+    {
+      "message": "Email already in use"
+    }
+
 ## Get a list of scenes created by a user.
 
 GET request to `https://cloud.shapespark.com/users/USERNAME/scenes/
