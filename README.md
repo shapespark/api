@@ -249,6 +249,7 @@ Each list entry contains:
 
     {
       "username": string,
+      "email": string,
       "active": True or False
     }
 
