@@ -261,6 +261,19 @@ request to `https://cloud.shapespark.com/users/USERNAME/deactivate`.
 If the subscription is renewed, the user can be activated again with a
 POST request to `https://cloud.shapespark.com/users/USERNAME/activate`.
 
+## Change a user scene creation token.
+
+A post request to
+`https://cloud.shapespark.com/users/USERNAME/change-token` with an
+empty body changes the user token for creating scenes. On success the
+HTTP 200 code is returned together with a JSON object:
+
+    {
+      "token": NEW_USER_SCENE_CREATION_TOKEN
+    }
+
+After the request is made the previous token stops working.
+
 ## Get a list of scenes created by a user.
 
 GET request to `https://cloud.shapespark.com/users/USERNAME/scenes/
