@@ -29,15 +29,15 @@ Sets properties of reflective materials, non-reflective materials do not need
 to be included. Each entry has the following properties:
 
 + `name`: required, must match material name from the `FBX`.
-+ `roughness`: optional, in `[0-1]` range, defaults to `1`.
++ `roughness`: optional, in `[0,1]` range, defaults to `1`.
 + `rougnessTexture`: optional, if set `roughness` property
 is ignored.
-+ `metallic`: optional, in `[0-1]` range, defaults to `1`.
++ `metallic`: optional, in `[0,1]` range, defaults to `1`.
 + `metallicTexture`: optional, if set `metallic` property is ignored.
 + `bumpTexture`: optional.
-+ `bumpScale`: optional, in `[0-1]` range, used when `bumpTexture`
++ `bumpScale`: optional, in `[0,1]` range, used when `bumpTexture`
   property is set to scale it.
-+ `emissionStrength`: optional, in `[0-1000]` range, if set the
++ `emissionStrength`: optional, in `[0,1000]` range, if set the
 material emits light.
 
 [More detailed description of `roughness`, `metallic` and
@@ -67,9 +67,9 @@ Each entry has the following properties:
 
 + `name`: required, any unique string.
 + `type`: required, `sun`, `spot` or `point`.
-+ `strength`: required, [0-1000]
-+ `color`: required, three RGB values in [0-1] range, in linear color space.
-+ `angle`: required for `spot` lights, [0-360].
++ `strength`: required, [0,1000]
++ `color`: required, three RGB values in [0,1] range, in linear color space.
++ `angle`: required for `spot` lights, [0,360].
 + `instances`: a list of light instances that use the settings.
 
 Each instance has the following properties:
@@ -82,10 +82,10 @@ properties](https://www.shapespark.com/docs#lights-tab)
 
 ### `sky` object
 
-'sky' is an optional object that can be included to change the
+`sky` is an optional object that can be included to change the
 default sky strength.
 
-+ `strength`: optional, 0-100 sky strength that is used for baking,
++ `strength`: optional, [0,100] sky strength that is used for baking,
 defaults to 6.
 
 # The API for importing the model.
@@ -263,7 +263,7 @@ POST request to `https://cloud.shapespark.com/users/USERNAME/activate`.
 
 ## Change a user scene creation token.
 
-A post request to
+A POST request to
 `https://cloud.shapespark.com/users/USERNAME/change-token` with an
 empty body changes the user token for creating scenes. On success the
 HTTP 200 code is returned together with a JSON object:
@@ -276,7 +276,7 @@ After the request is made the previous token stops working.
 
 ## Change a user email.
 
-A post request to
+A POST request to
 `https://cloud.shapespark.com/users/USERNAME/change-email` changes the
 user email. The request needs to include a JSON with a new email:
 
