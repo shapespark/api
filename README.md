@@ -59,17 +59,20 @@ If lights are missing, we can use ambient occlusion and sky based
 lighting that will give decent quality with no configuration effort
 from the user.
 
-Light `type`, `position` and `rotation` can be imported from `FBX`, if
-you prefer such solution only `size`, `strength`, `color` and `angle`
-(for spot lights) would need to be passed via `extras.json`.
+An entry of the `lights` list either adds a new light to the scene
+or sets additional properties for a light imported from `FBX`. If a light
+with the given name exists in `FBX`, `size`, `strength`, `color` and `angle`
+properties are copied from the entry to the existing light. Otherwise,
+the entry is treated as a new light.
 
 Each entry has the following properties:
 
 + `name`: required, any unique string.
-+ `type`: required, `sun`, `spot` or `point`.
-+ `strength`: required, [0,1000]
-+ `color`: required, three RGB values in [0,1] range, in linear color space.
-+ `angle`: required for `spot` lights, [0,360].
++ `type`: required for new light, `sun`, `spot` or `point`.
++ `strength`: required, `[0,1000]`
++ `color`: required, three RGB values in `[0,1]` range, in linear color space.
++ `size`: required, `[0.01,0.5]`
++ `angle`: required for `spot` lights, `[0,360]`.
 + `instances`: a list of light instances that use the settings.
 
 Each instance has the following properties:
@@ -85,7 +88,7 @@ properties](https://www.shapespark.com/docs#lights-tab)
 `sky` is an optional object that can be included to change the
 default sky strength.
 
-+ `strength`: optional, [0,100] sky strength that is used for baking,
++ `strength`: optional, `[0,100]` sky strength that is used for baking,
 defaults to 6.
 
 # The API for importing the model.
