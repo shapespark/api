@@ -43,15 +43,32 @@ material emits light.
 [More detailed description of `roughness`, `metallic` and
 `bump`](https://www.shapespark.com/docs#materials-tab).
 
+### `views` list
+
+An optional list of views that allow the user to teleport to points of
+interest in the scene. If the `views` list is present, the first view
+from the list is used as the initial camera placement after the scene
+is loaded.
+
+Each entry has the following properties:
+
++ `name`: optional, a user visible name of the view, defaults to 'viewX'.
++ `position`: required `[x, y, z]` coordinates of the camera, `z` axis is up.
++ `rotation`: required, `[yaw, pitch]` of the camera in degrees.
+
+If the list of views has more than one entry, the scene has an
+automatic tour button that automatically teleports the user between
+the views.
+
 ### `camera` object
 
-Sets the initial camera placement (alternatively we can import the
-placement from the `FBX`):
+Sets the optional camera settings and initial camera placement. The
+initial camera placement is used only if the `views` list is empty:
 
-+ `position`: required, `[x, y, z]` coordinates, `z` axis is up.
-+ `rotation`: required, `[yaw, pitch]` of the camera in degrees.
 + `fov`: optional, field of view in degrees.
 + `exposure`: optional, camera exposure in `[-3,3]` range, defaults to `0`.
++ `position`: optional, `[x, y, z]` coordinates, `z` axis is up.
++ `rotation`: optional, `[yaw, pitch]` of the camera in degrees.
 
 ### `lights` list
 
