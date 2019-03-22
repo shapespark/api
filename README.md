@@ -245,12 +245,16 @@ user. The request needs to include a JSON like:
     {
       "username": "alice",
       "email": "alice@example.org",
+      "password": "some password"
       "onlyValidate": false
     }
 
 Username can contain lower case letters and digits that can be
 separated by `_` or `-`.
 
+Password is optional - if password is not given logging in to the user
+account interface at `https://cloud.shapespark.com/` is disabled for the
+user.
 
 The result of the request is a JSON object:
 
@@ -290,13 +294,31 @@ Each list entry contains:
       "active": True or False
     }
 
-## Deactivate a user.
+## Activate a user.
+
+If the client using the API is associated with some default subscription
+plan then activating newly created users is not necessary, because they
+are automatically assigned the default plan on creation. In this case
+activation is needed only to re-activate a user after the user has
+canceled the subscription.
+
+Activation is performed by sending a POST request to
+`https://cloud.shapespark.com/users/USERNAME/activate` with an optional
+JSON object like:
+
+    {
+      "perpetual": boolean
+    }
+
+where `true` value assigns perpetual license to the user, and `false` value
+assigns the default subscription plan.
+
+Lack of JSON is equivalent to assigning the default subscription plan.
+
+## Deactivate a user
 
 A user that cancels subscription should be deactivated with POST
 request to `https://cloud.shapespark.com/users/USERNAME/deactivate`.
-
-If the subscription is renewed, the user can be activated again with a
-POST request to `https://cloud.shapespark.com/users/USERNAME/activate`.
 
 ## Change a user scene creation token.
 
