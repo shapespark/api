@@ -53,7 +53,7 @@ is loaded.
 Each entry has the following properties:
 
 + `name`: optional, a user visible name of the view, defaults to 'viewX'.
-+ `position`: required `[x, y, z]` coordinates of the camera, `z` axis is up.
++ `position`: required, `[x, y, z]` coordinates of the camera, `z` axis is up.
 + `rotation`: required, `[yaw, pitch]` of the camera in degrees.
 
 If the list of views has more than one entry, the scene has an
@@ -102,11 +102,28 @@ properties](https://www.shapespark.com/docs#lights-tab)
 
 ### `sky` object
 
-`sky` is an optional object that can be included to change the
-default sky strength.
+`sky` is an optional object that can be included to change the sky
+settings. If `sky` is missing, the default sky settings are used, if
+`sky` is set to null, the sky is disabled.
 
 + `strength`: optional, `[0,100]` sky strength that is used for baking,
-defaults to 6.
+defaults to `6`.
++ `color`: optional, three RGB values in `[0,1]` range, in linear
+color space, defaults to `[ 0.855, 0.863, 1]`.
++ `ambientOcclusion`: optional, an object that configures ambient
+occlusion parameters. If `ambientOcclusion` is missing, default ambient
+occlusion parameters are used, if `ambientOcclusion` is set to null,
+ambient occlusion is disabled.
+
+`ambientOcclusion` has the following properties:
+
++ `factor` optional, a float that specifies how strong is the effect
+of ambient occlusion, defaults to `0.05`. `0` is an equivalent of
+disabled ambient occlusion.
++ `distance` optional, a float that specific how far to search for
+occluders, defaults to `1`. For example, a `distance` `0.5` means that
+if there are no occluders within `0.5` meter from a given point in 3D
+space, the ambient occlusion has no effect on this point.
 
 # The API for importing the model.
 
