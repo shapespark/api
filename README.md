@@ -39,9 +39,22 @@ is ignored.
   property is set to scale it.
 + `emissionStrength`: optional, in `[0,1000]` range, if set the
 material emits light.
++ `doubleSided`: optional, defaults to `False`, use sparingly
+[see the limitations of double sided.
+materials](https://www.shapespark.com/docs#materials-tab)
 
-[More detailed description of `roughness`, `metallic` and
-`bump`](https://www.shapespark.com/docs#materials-tab).
+
+The following material properties are read from the input FBX file,
+but can be overwritten by `extras.json`:
+
++ `baseColor`: optional, three RGB values in `[0,1]` range, in linear
+color space.
++ `baseColorTexture`: optional, if set `baseColor` is ignored. Can be
+set to `null` to reset the base color texture setting from FBX.
++ `opacity`: optional, in `[0, 1]` range.
+
+[More detailed description of the material
+properties](https://www.shapespark.com/docs#materials-tab).
 
 ### `views` list
 

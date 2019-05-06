@@ -17,7 +17,12 @@
       "bumpTexture": {
         "fileName": "Steel_Brushed_Stainless.jpg"
       },
-      "bumpScale": 0.001
+      "bumpScale": 0.001,
+      "doubleSided": true,
+      "opacity": 0.8,
+      "baseColorTexture": {
+        "fileName": "Carpet_Loop_Pattern.jpg"
+      }
     }
   ],
 
