@@ -127,6 +127,9 @@ color space, defaults to `[ 0.855, 0.863, 1]`.
 occlusion parameters. If `ambientOcclusion` is missing, default ambient
 occlusion parameters are used, if `ambientOcclusion` is set to null,
 ambient occlusion is disabled.
++ `texture`: optional, an object that configures the equirectangular
+sky texture that surrounds the scene. The texture is not used for
+baking.
 
 `ambientOcclusion` has the following properties:
 
@@ -137,6 +140,14 @@ disabled ambient occlusion.
 occluders, defaults to `1`. For example, a `distance` `0.5` means that
 if there are no occluders within `0.5` meter from a given point in 3D
 space, the ambient occlusion has no effect on this point.
+
+`texture` has the following properties:
+
++ `fileName`: required name of the file inside the zip package that
+stores the sky texture.
++ `yawRotation` optional number in `[0, 360]` range that specifies the
+rotation of the sky texture in degrees. Defaults to `0`.
+
 
 # The API for importing the model.
 

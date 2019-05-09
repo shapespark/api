@@ -36,6 +36,10 @@
     "ambientOcclusion": {
       "factor": 0.05,
       "distance": 1
+    },
+    "texture": {
+      "fileName": "sky.jpg",
+      "yawRotation": 77
     }
   },
 
