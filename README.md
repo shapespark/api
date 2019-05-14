@@ -98,7 +98,7 @@ the entry is treated as a new light.
 Each entry has the following properties:
 
 + `name`: required, any unique string.
-+ `type`: required for new light, `sun`, `spot` or `point`.
++ `type`: required for new light, `"sun"`, `"spot"` or `"point"`.
 + `strength`: required, `[0,1000]`
 + `color`: required, three RGB values in `[0,1]` range, in linear color space.
 + `size`: required, `[0.01,0.5]`
@@ -148,6 +148,15 @@ stores the sky texture.
 + `yawRotation` optional number in `[0, 360]` range that specifies the
 rotation of the sky texture in degrees. Defaults to `0`.
 
+### `bake` object
+
+`bake` is an optional object that allows to control lightmap baking
+quality. It has the following property:
+
++ `quality`: a string, one of `"draft"`, `"low"`, `"medium"`,
+`"high"`, "`super`". Each setting corresponds to different lightmap
+baking parameters (the number of samples, bounces and the maximum
+number of lightmaps).
 
 # The API for importing the model.
 
