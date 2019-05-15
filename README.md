@@ -39,7 +39,7 @@ is ignored.
   property is set to scale it.
 + `emissionStrength`: optional, in `[0,1000]` range, if set the
 material emits light.
-+ `doubleSided`: optional, defaults to `False`, use sparingly
++ `doubleSided`: optional, defaults to `false`, use sparingly
 [see the limitations of double sided.
 materials](https://www.shapespark.com/docs#materials-tab)
 
@@ -72,6 +72,16 @@ Each entry has the following properties:
 If the list of views has more than one entry, the scene has an
 automatic tour button that automatically teleports the user between
 the views.
+
+### `autoTour` object
+
+`autoTour` is an optional object that configures the automatic tour
+through all the scene views:
+
++ `disabled`: optional, disables the automatic tour feature, defaults to
+`false`.
++ `startOnLoad`: optional, if `true` the automatic tour is started when
+the scene is loaded, defaults to `false`.
 
 ### `camera` object
 
@@ -324,7 +334,7 @@ Each list entry contains:
     {
       "username": string,
       "email": string,
-      "active": True or False
+      "active": true or false
     }
 
 ## Activate a user.

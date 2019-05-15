@@ -96,6 +96,11 @@
     }
   ],
 
+  "autoTour": {
+    "disabled": false,
+    "startOnLoad": true
+  },
+
   "lights" : [
     {
       "type" : "point",
