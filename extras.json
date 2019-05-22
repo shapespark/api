@@ -98,7 +98,7 @@
 
   "autoTour": {
     "disabled": false,
-    "startOnLoad": true
+    "startOnLoad": false
   },
 
   "lights" : [
