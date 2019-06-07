@@ -18,6 +18,9 @@ and `.png` files but can be also `.tif`, `.bmp` and `.tga`. If
 possible all lowercase texture names will reduce troubles (but not a
 necessity).
 
++ **IES light profiles** - as with textures, can be placed in the archive
+root directory or a sub-directory.
+
 ## `extras.json` format.
 
 [Example file](./extras.json)
@@ -39,7 +42,7 @@ is ignored.
   property is set to scale it.
 + `emissionStrength`: optional, in `[0,1000]` range, if set the
 material emits light.
-+ `doubleSided`: optional, defaults to `False`, use sparingly
++ `doubleSided`: optional, defaults to `false`, use sparingly
 [see the limitations of double sided.
 materials](https://www.shapespark.com/docs#materials-tab)
 
@@ -77,6 +80,16 @@ If the list of views has more than one entry, the scene has an
 automatic tour button that automatically teleports the user between
 the views.
 
+### `autoTour` object
+
+`autoTour` is an optional object that configures the automatic tour
+through all the scene views:
+
++ `disabled`: optional, disables the automatic tour feature, defaults to
+`false`.
++ `startOnLoad`: optional, if `true` the automatic tour is started when
+the scene is loaded, defaults to `false`.
+
 ### `camera` object
 
 Sets the optional camera settings and initial camera placement. The
@@ -89,24 +102,26 @@ initial camera placement is used only if the `views` list is empty:
 
 ### `lights` list
 
-If lights are missing, we can use ambient occlusion and sky based
-lighting that will give decent quality with no configuration effort
-from the user.
+If lights are missing, ambient occlusion and sky based lighting can be
+used for decent quality illumination with no configuration effort from the
+user.
 
-An entry of the `lights` list either adds a new light to the scene
-or sets additional properties for a light imported from `FBX`. If a light
-with the given name exists in `FBX`, `size`, `strength`, `color` and `angle`
-properties are copied from the entry to the existing light. Otherwise,
-the entry is treated as a new light.
+An entry of the `lights` list either adds a new light to the scene or sets
+additional properties for a light imported from `FBX`. If a light with the
+given name exists in `FBX`, all the entry properties except `name` and
+`instances` are copied to the existing light. Otherwise, the entry is
+treated as a new light.
 
 Each entry has the following properties:
 
 + `name`: required, any unique string.
 + `type`: required for new light, `"sun"`, `"spot"` or `"point"`.
 + `strength`: required, `[0,1000]`
-+ `color`: required, three RGB values in `[0,1]` range, in linear color space.
-+ `size`: required, `[0.01,0.5]`
 + `angle`: required for `spot` lights, `[0,360]`.
++ `photometricProfile`: optional, only for `point` and `spot` lights, path to
+IES light profile file.
++ `size`: required, `[0.01,0.5]`
++ `color`: required, three RGB values in `[0,1]` range, in linear color space.
 + `instances`: a list of light instances that use the settings.
 
 Each instance has the following properties:
@@ -328,7 +343,7 @@ Each list entry contains:
     {
       "username": string,
       "email": string,
-      "active": True or False
+      "active": true or false
     }
 
 ## Activate a user.
