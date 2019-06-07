@@ -68,6 +68,10 @@ Each entry has the following properties:
 + `name`: optional, a user visible name of the view, defaults to 'viewX'.
 + `position`: required, `[x, y, z]` coordinates of the camera, `z` axis is up.
 + `rotation`: required, `[yaw, pitch]` of the camera in degrees.
++ `fov`: optional, field of view in degrees. View can alter the global
+  field of view configured in the `camera` object. The altered field of
+  view is used until the user teleports to another location in the
+  scene.
 
 If the list of views has more than one entry, the scene has an
 automatic tour button that automatically teleports the user between
