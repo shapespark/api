@@ -60,7 +60,7 @@ def main():
         print('Path to the authorization token file is missing')
         usage()
 
-    (username, token) = read_text_file(token_path).split(' ')
+    (username, token) = read_text_file(token_path).strip().split(' ')
 
     url = '{0}/scenes/{1}/import-upload-init'.format(
         SHAPESPARK_ROOT_URL, scene_name)
@@ -86,7 +86,7 @@ def main():
         print('Model uploaded for import. Wait for the import to finish at {0}'
               .format(response.json()['watchUrl']))
 
-    # Get a list of users scenes:
+    # Get a list of users scenes (additional permissions may be required):
     url = '{0}/scenes/'.format(SHAPESPARK_ROOT_URL)
     response = requests.get(url,auth=(username, token), verify=True)
     if response.status_code != 200:

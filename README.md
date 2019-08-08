@@ -69,7 +69,8 @@ is loaded.
 Each entry has the following properties:
 
 + `name`: optional, a user visible name of the view, defaults to 'viewX'.
-+ `position`: required, `[x, y, z]` coordinates of the camera, `z` axis is up.
++ `position`: required, `[x, y, z]` coordinates of the camera, `z` axis is
+  up.
 + `rotation`: required, `[yaw, pitch]` of the camera in degrees.
 + `fov`: optional, field of view in degrees. View can alter the global
   field of view configured in the `camera` object. The altered field of
@@ -177,6 +178,33 @@ quality. It has the following property:
 baking parameters (the number of samples, bounces and the maximum
 number of lightmaps).
 
+### `panoramas` object
+
+`panoramas` is an optional list that allows to specify panorama images
+to be generated during the scene import.
+
+Each entry of the list corresponds to one panorama and has the following
+properties:
+
++ `name`: required, unique, must contain only lowercase letters (`a-z`),
+  digits (`0-9`) and sepearators (`_` and `-`).
++ `position`: optional, `[x, y, z]` coordinates of the panoramic camera,
+  `z` axis is up, defaults to the initial camera position in the scene.
++ `rotation`: optional, yaw rotation for the initial looking direction at
+  the panorama image, defaults to `0`.
++ `width`: optional, width in pixels of the panorama image, defaults to
+  `8000`.
++ `width`: optional, height in pixels of the panorama image, defaults to
+  `4000`.
+
+Panoramas are generated in equirectangular (360x180 degree) format. The optimal
+`width`:`height` aspect ratio is 2:1.
+
+After the scene has been imported, a generated panorama can be retrieved
+by a `GET` request to
+`https://[USER_NAME].shapespark.com/[SCENE_NAME]/panoramas/[PANORAMA_NAME]`.
+The response for the request is a JPG file containing the panorama image.
+
 # The API for importing the model.
 
 [A script demonstrating how to use the API](scene_creation_example.py).
@@ -200,7 +228,6 @@ For testing the user name and the token from the
 
 
 The result of the request is the following JSON object:
-
 
     {
       "uploadUrl": SIGNED_GOOGLE_STORAGE_BUCKET_URL
