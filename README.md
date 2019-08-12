@@ -178,7 +178,7 @@ quality. It has the following property:
 baking parameters (the number of samples, bounces and the maximum
 number of lightmaps).
 
-### `panoramas` object
+### `panoramas` list
 
 `panoramas` is an optional list that allows to specify panorama images
 to be generated during the scene import.
@@ -278,7 +278,8 @@ returns a JSON list with items like:
 
 + `name` is always present
 + `watchUrl` is present only if the scene import is currently in progress.
-+ `sceneUrl` and `assetsUrl` are present only if the scene was successfully imported at least once.
++ `sceneUrl` and `assetsUrl` are present only if the scene was
+  successfully imported at least once.
 
 If import is being run again for the scene that already exists, the
 entry will include all three: `watchUrl`, `sceneUrl` and
@@ -295,6 +296,7 @@ version of the scene.
 + 320x180 thumbnail: `SCENE_ASSETS_URL + 'thumbnail.jpg'`
 + 1920x1080 cover image: `SCENE_ASSETS_URL + 'cover.jpg'`
 + favicon: `SCENE_ASSETS_URL + 'favicon.ico'`
++ panorama: `SCENE_ASSETS_URL + 'img/360/' + PANORAMA_NAME + '.jpg'`
 
 ## DELETE a user scene
 
