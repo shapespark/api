@@ -118,7 +118,7 @@ Each entry has the following properties:
 + `name`: required, any unique string.
 + `type`: required for new light, `"sun"`, `"spot"`, `"point"` or `"area"`.
 + `strength`: required, `[0,1000]`
-+ `angle`: required for `spot` lights, `[0,360]`.
++ `angle`: required for `spot` lights, `[1,180]`.
 + `photometricProfile`: optional, only for `point` and `spot` lights, path to
 IES light profile file.
 + `width` and `height`: required for `area` lights, both properties in
