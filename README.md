@@ -33,19 +33,17 @@ to be included. Each entry has the following properties:
 
 + `name`: required, must match material name from the `FBX`.
 + `roughness`: optional, in `[0,1]` range, defaults to `1`.
-+ `rougnessTexture`: optional, if set `roughness` property
-is ignored.
++ `rougnessTexture`: optional, if set `roughness` property is ignored.
 + `metallic`: optional, in `[0,1]` range, defaults to `1`.
 + `metallicTexture`: optional, if set `metallic` property is ignored.
 + `bumpTexture`: optional.
-+ `bumpScale`: optional, in `[0,1]` range, used when `bumpTexture`
++ `bumpScale`: optional, in `[-0.2,0.2]` range, used when `bumpTexture`
   property is set to scale it.
-+ `emissionStrength`: optional, in `[0,1000]` range, if set the
++ `emissionStrength`: optional, minimum value `0`, if set the
 material emits light.
-+ `doubleSided`: optional, defaults to `false`, use sparingly
++ `doubleSided`: optional, boolean, defaults to `false`, use sparingly
 [see the limitations of double sided.
 materials](https://www.shapespark.com/docs#materials-tab)
-
 
 The following material properties are read from the input FBX file,
 but can be overwritten by `extras.json`:
@@ -56,8 +54,15 @@ color space.
 set to `null` to reset the base color texture setting from FBX.
 + `opacity`: optional, in `[0, 1]` range.
 
+Values for `roughnessTexture`, `metallicTexture` and `bumpTexture`
+are objects having only one property:
+
++ `fileName`: required, name of the file inside the archive
+
+
 [More detailed description of the material
 properties](https://www.shapespark.com/docs#materials-tab).
+
 
 ### `views` list
 
@@ -69,37 +74,56 @@ is loaded.
 Each entry has the following properties:
 
 + `name`: optional, a user visible name of the view, defaults to 'viewX'.
-+ `position`: required, `[x, y, z]` coordinates of the camera, `z` axis is
-  up.
-+ `rotation`: required, `[yaw, pitch]` of the camera in degrees.
-+ `fov`: optional, field of view in degrees. View can alter the global
-  field of view configured in the `camera` object. The altered field of
-  view is used until the user teleports to another location in the
-  scene.
++ `mode`: optional, values `"fps"` (default), `"top"`, `"orbit"`.
++ `rotation`: required, `[yaw,pitch]` of the camera in degrees.
++ `fov`: optional, field of view in degrees, in `[1,179]` range.
+  View can alter the global field of view configured in the `camera` object.
+  The altered field of view is used until the user teleports to another
+  location in the scene.
+
+
+Properties specific for `fps` views:
+
++ `position`: required, `[x,y,z]` coordinates of the camera,
+  `z` axis is up.
+
+Properties specific for `orbit` and `top` views:
+
++ `target`: required, `[x,y,z]` coordinates of the target the camera
+  is looking at.
++ `distance`: required, distance of the camera from the target,
+  greater than `0`.
++ `minUpAngle`: for `orbit` views only, optional, minimum elevation
+  angle of the camera, in `[-90, 90]` range
++ `maxUpAngle`: for `orbit` views only, optional, maximum elevation
+  angle for the camera, in `[-90, 90]` range
 
 If the list of views has more than one entry, the scene has an
 automatic tour button that automatically teleports the user between
 the views.
+
 
 ### `autoTour` object
 
 `autoTour` is an optional object that configures the automatic tour
 through all the scene views:
 
-+ `disabled`: optional, disables the automatic tour feature, defaults to
++ `disabled`: optional, boolean, disables the automatic tour feature, defaults to
 `false`.
-+ `startOnLoad`: optional, if `true` the automatic tour is started when
++ `startOnLoad`: optional, boolean, if `true` the automatic tour is started when
 the scene is loaded, defaults to `false`.
+
 
 ### `camera` object
 
 Sets the optional camera settings and initial camera placement. The
 initial camera placement is used only if the `views` list is empty:
 
-+ `fov`: optional, field of view in degrees.
++ `fov`: optional, field of view in degrees in `[1,179]` range.
 + `exposure`: optional, camera exposure in `[-3,3]` range, defaults to `0`.
-+ `position`: optional, `[x, y, z]` coordinates, `z` axis is up.
-+ `rotation`: optional, `[yaw, pitch]` of the camera in degrees.
++ `position`: optional, `[x,y,z]` coordinates, `z` axis is up.
++ `rotation`: optional, `[yaw,pitch]` of the camera in degrees.
+
 
 ### `lights` list
 
@@ -117,21 +141,21 @@ Each entry has the following properties:
 
 + `name`: required, any unique string.
 + `type`: required for new light, `"sun"`, `"spot"`, `"point"` or `"area"`.
-+ `strength`: required, `[0,1000]`
++ `strength`: required, minimum value `0`
++ `color`: required, three RGB values in `[0,1]` range, in linear color space.
 + `angle`: required for `spot` lights, `[1,180]`.
 + `photometricProfile`: optional, only for `point` and `spot` lights, path to
 IES light profile file.
 + `width` and `height`: required for `area` lights, both properties in
   `[0.01,5]` range
 + `size`: required for all light types except `area`, `[0.01,0.5]`
-+ `color`: required, three RGB values in `[0,1]` range, in linear color space.
 + `instances`: a list of light instances that use the settings.
 
 Each instance has the following properties:
 
  + `position`: required for `spot`, `point` and `area` lights,
-   `[x, y, z]` coordinates.
- + `rotation`: required for `sun`, `spot` and `area` lights, `[yaw, pitch]`.
+   `[x,y,z]` coordinates.
+ + `rotation`: required for `sun`, `spot` and `area` lights, `[yaw,pitch]`.
 
 [More detailed description of light
 properties](https://www.shapespark.com/docs#lights-tab)
@@ -145,7 +169,7 @@ settings. If `sky` is missing, the default sky settings are used, if
 + `strength`: optional, `[0,100]` sky strength that is used for baking,
 defaults to `6`.
 + `color`: optional, three RGB values in `[0,1]` range, in linear
-color space, defaults to `[ 0.855, 0.863, 1]`.
+color space, defaults to `[0.855,0.863,1]`.
 + `ambientOcclusion`: optional, an object that configures ambient
 occlusion parameters. If `ambientOcclusion` is missing, default ambient
 occlusion parameters are used, if `ambientOcclusion` is set to null,
@@ -160,15 +184,15 @@ baking.
 of ambient occlusion, defaults to `0.05`. `0` is an equivalent of
 disabled ambient occlusion.
 + `distance` optional, a float that specific how far to search for
-occluders, defaults to `1`. For example, a `distance` `0.5` means that
-if there are no occluders within `0.5` meter from a given point in 3D
-space, the ambient occlusion has no effect on this point.
+occluders, greather than `0`, defaults to `1`. For example, a `distance`
+`0.5` means that if there are no occluders within `0.5` meter from
+a given point in 3D space, the ambient occlusion has no effect on this point.
 
 `texture` has the following properties:
 
-+ `fileName`: required name of the file inside the zip package that
++ `fileName`: required, name of the file inside the archive that
 stores the sky texture.
-+ `yawRotation` optional number in `[0, 360]` range that specifies the
++ `yawRotation` optional number in `[0,360]` range that specifies the
 rotation of the sky texture in degrees. Defaults to `0`.
 
 ### `bake` object
@@ -191,14 +215,14 @@ properties:
 
 + `name`: required, unique, must contain only lowercase letters (`a-z`),
   digits (`0-9`) and sepearators (`_` and `-`).
-+ `position`: optional, `[x, y, z]` coordinates of the panoramic camera,
++ `position`: optional, `[x,y,z]` coordinates of the panoramic camera,
   `z` axis is up, defaults to the initial camera position in the scene.
 + `rotation`: optional, yaw rotation for the initial looking direction at
   the panorama image, defaults to `0`.
 + `width`: optional, width in pixels of the panorama image, defaults to
-  `8000`.
+  `8000`, minimum `100`.
 + `width`: optional, height in pixels of the panorama image, defaults to
-  `4000`.
+  `4000`, minimum `100`.
 
 Panoramas are generated in equirectangular (360x180 degree) format. The optimal
 `width`:`height` aspect ratio is 2:1.
