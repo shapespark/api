@@ -37,8 +37,8 @@ to be included. Each entry has the following properties:
 + `metallic`: optional, in `[0,1]` range, defaults to `1`.
 + `metallicTexture`: optional, if set `metallic` property is ignored.
 + `bumpTexture`: optional.
-+ `bumpScale`: optional, in `[-0.2,0.2]` range, used when `bumpTexture`
-  property is set to scale it.
++ `bumpScale`: used only when `bumpTexture` is set to scale it, optional,
+  in [-0.2,0.2] range, defautls to `0.001`. 
 + `emissionStrength`: optional, minimum value `0`, if set the
 material emits light.
 + `doubleSided`: optional, boolean, defaults to `false`, use sparingly
@@ -49,10 +49,10 @@ The following material properties are read from the input FBX file,
 but can be overwritten by `extras.json`:
 
 + `baseColor`: optional, three RGB values in `[0,1]` range, in linear
-color space.
+color space, defaults to `[1,1,1]`.
 + `baseColorTexture`: optional, if set `baseColor` is ignored. Can be
 set to `null` to reset the base color texture setting from FBX.
-+ `opacity`: optional, in `[0, 1]` range.
++ `opacity`: optional, in `[0,1]` range, defaults to `1`.
 
 Values for `roughnessTexture`, `metallicTexture` and `bumpTexture`
 are objects having only one property:
@@ -94,9 +94,9 @@ Properties specific for `orbit` and `top` views:
 + `distance`: required, distance of the camera from the target,
   greater than `0`.
 + `minUpAngle`: for `orbit` views only, optional, minimum elevation
-  angle of the camera, in `[-90, 90]` range
+  angle of the camera, in `[-90, 90]` range, defaults to `-90`
 + `maxUpAngle`: for `orbit` views only, optional, maximum elevation
-  angle for the camera, in `[-90, 90]` range
+  angle for the camera, in `[-90, 90]` range, defaults to `90`
 
 If the list of views has more than one entry, the scene has an
 automatic tour button that automatically teleports the user between
@@ -119,10 +119,12 @@ the scene is loaded, defaults to `false`.
 Sets the optional camera settings and initial camera placement. The
 initial camera placement is used only if the `views` list is empty:
 
-+ `fov`: optional, field of view in degrees in `[1,179]` range.
++ `fov`: optional, field of view in degrees in `[1,179]` range, defaults to `70`.
 + `exposure`: optional, camera exposure in `[-3,3]` range, defaults to `0`.
-+ `position`: optional, `[x,y,z]` coordinates, `z` axis is up.
-+ `rotation`: optional, `[yaw,pitch]` of the camera in degrees.
++ `position`: optional, `[x,y,z]` coordinates, `z` axis is up, defaults
+  to the center of the scene.
++ `rotation`: optional, `[yaw,pitch]` of the camera in degrees,
+  defaults to `[0,0]`.
 
 
 ### `lights` list
@@ -141,14 +143,19 @@ Each entry has the following properties:
 
 + `name`: required, any unique string.
 + `type`: required for new light, `"sun"`, `"spot"`, `"point"` or `"area"`.
-+ `strength`: required, minimum value `0`
-+ `color`: required, three RGB values in `[0,1]` range, in linear color space.
-+ `angle`: required for `spot` lights, `[1,180]`.
-+ `photometricProfile`: optional, only for `point` and `spot` lights, path to
-IES light profile file.
-+ `width` and `height`: required for `area` lights, both properties in
-  `[0.01,5]` range
-+ `size`: required for all light types except `area`, `[0.01,0.5]`
++ `strength`: optional, minimum value `0`, defaults to `8` for `sun`
+  and `25` for all other light types.
++ `color`: optional, three RGB values in `[0,1]` range, in linear color space,
+  defaults to `[1,0.8,0.638]` for `sun` and `[1.0,0.88,0.799]` for all other
+  light types.
++ `angle`: for `spot` lights only, required, in `[1,180]` range,
+  defaults to `140`.
++ `photometricProfile`: for `point` and `spot` lights only, optional,
+  path to IES light profile file.
++ `width` and `height`: for `area` lights only, optional, both properties in
+  `[0.01,5]` range, default to `0.2`.
++ `size`: for all light types except `area`, optional, in `[0.01,0.5]` range,
+  defaults to `0.02` for sun and `0.1` for all other light types.
 + `instances`: a list of light instances that use the settings.
 
 Each instance has the following properties:
