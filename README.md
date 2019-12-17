@@ -148,7 +148,7 @@ Each entry has the following properties:
 + `color`: optional, three RGB values in `[0,1]` range, in linear color space,
   defaults to `[1,0.8,0.638]` for `sun` and `[1.0,0.88,0.799]` for all other
   light types.
-+ `angle`: for `spot` lights only, required, in `[1,180]` range,
++ `angle`: for `spot` lights only, optional, in `[1,180]` range,
   defaults to `140`.
 + `photometricProfile`: for `point` and `spot` lights only, optional,
   path to IES light profile file.
@@ -156,7 +156,7 @@ Each entry has the following properties:
   `[0.01,5]` range, default to `0.2`.
 + `size`: for all light types except `area`, optional, in `[0.01,0.5]` range,
   defaults to `0.02` for sun and `0.1` for all other light types.
-+ `instances`: a list of light instances that use the settings.
++ `instances`: required, a list of light instances that use the settings.
 
 Each instance has the following properties:
 
