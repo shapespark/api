@@ -266,5 +266,40 @@
 
   "bake": {
     "quality": "draft"
-  }
+  },
+  "author": "Anonymous",
+  "title": "Two cubes",
+  "authorHref": "https://en.wikipedia.org/wiki/Cube",
+  "materialPickers": [
+    {
+      "trigger": {
+        "type": "node",
+        "nodeType" : "Metal cube"
+      },
+      "toPick" : [
+        "Marble"
+      ],
+      "toReplace" : "Metal"
+    },
+    {
+      "trigger" : {
+        "type": "sphere",
+        "color" : "#4c9ed9",
+        "height" : 0.2,
+        "icon" : "paint-brush",
+        "opacity" : 1,
+        "position" : [
+          1.45046216294895,
+          -0.58053286227248,
+          -0.111155669113417
+        ],
+        "radius" : 0.07,
+        "type" : "sphere"
+      },
+      "toPick" : [
+        "Metal"
+      ],
+      "toReplace" : "Marble"
+    }
+  ]
 }
