@@ -1,27 +1,27 @@
 {
   "materials" : [
     {
-      "name" : "Material.001",
-      "roughness" : 0.7,
-      "metallic": 1.0,
+      "name" : "Marble",
+      "roughness" : 0.3,
+      "metallic": 0.0,
       "emissionStrength": 3.0
     },
     {
-      "name" : "Material.002",
+      "name" : "Metal",
       "roughnessTexture": {
-        "fileName": "Steel_Brushed_Stainless.jpg"
+        "fileName": "rusty_metal_02_rough_1k.jpg"
       },
       "metallicTexture": {
-        "fileName": "Steel_Brushed_Stainless.jpg"
+        "fileName": "rusty_metal_02_spec_1k.jpg"
       },
       "bumpTexture": {
-        "fileName": "Steel_Brushed_Stainless.jpg"
+        "fileName": "rusty_metal_02_disp_1k.jpg"
       },
-      "bumpScale": 0.001,
-      "doubleSided": true,
-      "opacity": 0.8,
+      "bumpScale": 0.005,
+      "doubleSided": false,
+      "opacity": 0.9,
       "baseColorTexture": {
-        "fileName": "Carpet_Loop_Pattern.jpg"
+        "fileName": "rusty_metal_02_diff_1k.jpg"
       }
     }
   ],
@@ -47,53 +47,53 @@
     {
       "name": "First view",
       "rotation" : [
-        22.19,
-        -32.28
+        42.11,
+        -11.64
       ],
       "position" : [
-        0.15,
-        -0.38,
-        0.14
+        2.03,
+        -2.93,
+        0.22
       ]
     },
     {
       "name": "Second view",
       "rotation" : [
-        -136.8,
-        -28.68
+        -144.24,
+        -8.16
       ],
       "position" : [
-        -0.10,
-        0.15,
-        0.05
+        -2.29,
+        2.64,
+        0.22
       ]
     },
     {
       "name": "Third view",
       "fov": 45,
       "rotation" : [
-        -172.44,
-        -35.16
+        132,
+        -7.78
       ],
       "position" : [
-        -0.01,
-        0.24,
+        4.70,
+        3.73,
         0.08
       ]
     },
     {
       "name": "Top view",
       "mode": "top",
-      "distance" : 0.23,
+      "distance" : 3,
       "rotation" : [-172.44, -90],
       "target" : [0, 0, 0]
     },
     {
       "name": "Orbit view",
       "mode": "orbit",
-      "rotation" : [144.65, -28.89],
+      "rotation" : [ 173.74, -16.90],
       "target" : [0, 0, 0],
-      "distance": 0.5
+      "distance": 3
     }
   ],
 
@@ -266,5 +266,37 @@
 
   "bake": {
     "quality": "draft"
-  }
+  },
+  "author": "Anonymous",
+  "title": "Two cubes",
+  "authorHref": "https://en.wikipedia.org/wiki/Cube",
+  "materialPickers": [
+    {
+      "trigger": {
+        "type": "node",
+        "nodeType" : "Metal cube"
+      },
+      "toPick" : [
+        "Marble"
+      ],
+      "toReplace" : "Metal"
+    },
+    {
+      "trigger" : {
+        "type": "sphere",
+        "height" : 0.2,
+        "position" : [
+          1.45046216294895,
+          -0.58053286227248,
+          -0.111155669113417
+        ],
+        "radius" : 0.07,
+        "type" : "sphere"
+      },
+      "toPick" : [
+        "Metal"
+      ],
+      "toReplace" : "Marble"
+    }
+  ]
 }

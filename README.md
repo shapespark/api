@@ -202,6 +202,54 @@ stores the sky texture.
 + `yawRotation` optional number in `[0,360]` range that specifies the
 rotation of the sky texture in degrees. Defaults to `0`.
 
+
+### `title` and `author`
+
+The following settings can be used to display a title and author in the
+corner of the web 3D viewer and to change the HTML page title of the web
+browser tab:
+
++ `title`: an optional string.
++ `author`: an optional string.
++ `authorHref`: an optional string with URL that is open when the
+author text is clicked, it must start with `https://` or `http://`.
+
+### `materialPickers` list
+
+Material pickers allow the user to replace one material in the scene
+with some other material. The material change action can be triggered
+by a click in any existing object in the scene or an additional sphere
+or sprite objects.
+
+Each entry on the `materialPickers` list has the following properties
+
++ `toReplace`: required, a name of a material in the scene to be
+replaced by the material picker.
++ `toPick`: required, a list of names of materials in the scene to be
+shown to the user as replacement options.
++ `trigger`: required, an object that configures how the material
+picker is opened.
+
+To open a material picker when an existing object in the scene is
+clicked, use the following `trigger` properties:
++ `type`: `"node"`
++ `nodeType`: required, a string with the name of the object.
+
+To open a material picker when an additional sphere in the scene is
+clicked, use the following `trigger` properties:
++ `type`: `"sphere"`
++ `position`: required, `[x,y,z]` coordinates where the sphere is placed.
++ `radius`: optional, the size of the sphere, defaults to 7 centimeters.
++ `text`: optional, a short text to be displayed on the sphere. If not set a paint brush icon is displayed.
+
+To open a material picker when a flat sprite always facing the camera
+is clicked, use the following `trigger` properties:
++ `type`: `"sprite"`
++ `position`: required, `[x,y,z]` coordinates where the sprite is placed.
++ `height`: optional, the height of the sprite, defaults to 20 centimeters. The width of the sprite is set automatically to match the length of the text on the sprite.
++ `text`: optional, a text to be displayed on the sprite. If not set a paint brush icon is displayed.
+
+
 ### `bake` object
 
 `bake` is an optional object that allows to control lightmap baking
