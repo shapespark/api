@@ -232,11 +232,13 @@ picker is opened.
 
 To open a material picker when an existing object in the scene is
 clicked, use the following `trigger` properties:
+
 + `type`: `"node"`
 + `nodeType`: required, a string with the name of the object.
 
 To open a material picker when an additional sphere in the scene is
 clicked, use the following `trigger` properties:
+
 + `type`: `"sphere"`
 + `position`: required, `[x,y,z]` coordinates where the sphere is placed.
 + `radius`: optional, the size of the sphere, defaults to 7 centimeters.
@@ -244,6 +246,7 @@ clicked, use the following `trigger` properties:
 
 To open a material picker when a flat sprite always facing the camera
 is clicked, use the following `trigger` properties:
+
 + `type`: `"sprite"`
 + `position`: required, `[x,y,z]` coordinates where the sprite is placed.
 + `height`: optional, the height of the sprite, defaults to 20 centimeters. The width of the sprite is set automatically to match the length of the text on the sprite.
