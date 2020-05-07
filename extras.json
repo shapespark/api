@@ -284,10 +284,7 @@
     {
       "trigger" : {
         "type": "sphere",
-        "color" : "#4c9ed9",
         "height" : 0.2,
-        "icon" : "paint-brush",
-        "opacity" : 1,
         "position" : [
           1.45046216294895,
           -0.58053286227248,
