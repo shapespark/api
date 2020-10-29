@@ -1,3 +1,12 @@
+# Introduction
+
+Shapespark cloud API automates creation of WebGL 3D visualizations
+with realistic, baked lighting. The API accepts a 3D model in one of
+popular formats - FBX, COLLADA, OBJ, GLTF and returns a link to a WebGL
+visualization created from the model. If you would like to try the
+API, get in touch with team@shapespark.com to discuss your use case
+and get API access tokens.
+
 # Upload format for the Shapespark API.
 
 ## Archive structure.
@@ -307,10 +316,6 @@ sepearators (`_` and `-`).
 The request must include the HTTP `Authorization` header with the user
 name and the secret token. The username and the token are created
 during the user registration.
-
-For testing the user name and the token from the
-`Users\[USER_NAME]\AppData\Shapespark\auth` file can be used.
-
 
 The result of the request is the following JSON object:
 
