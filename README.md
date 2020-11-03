@@ -2,10 +2,10 @@
 
 Shapespark cloud API automates creation of WebGL 3D visualizations
 with realistic, baked lighting. The API accepts a 3D model in one of
-popular formats - FBX, COLLADA, OBJ, GLTF and returns a link to a WebGL
-visualization created from the model. If you would like to try the
-API, get in touch with team@shapespark.com to discuss your use case
-and get API access tokens.
+the popular formats: FBX, COLLADA, OBJ, GLTF and returns a link to a
+WebGL visualization created from the model. If you would like to try
+the API, get in touch with team@shapespark.com to discuss your use
+case and get API access tokens.
 
 # Upload format for the Shapespark API.
 
@@ -240,7 +240,8 @@ Each entry on the `materialPickers` list has the following properties
 + `trigger`: required, an object that configures how the material
 picker is opened.
 
-Each element in the `options` list is a list of replacement operations, each such operation has the following properties:
+Each element in the `options` list is a list of replacement
+operations. Each replacement operation has the following properties:
 
 + `toReplace`: required, a name of a material in the scene to be
 replaced when the option is selected.
@@ -279,8 +280,8 @@ the original materials, it doesn't require any JSON configuration
 entry. The second sphere applies the first selection option: replaces
 the floor material with 'floor stone' and the sofa material with 'sofa
 red'. The third sphere applies the second selection option: replaces
-the floor material with 'floor carpet' and sofa materials with 'sofa
-green'.
+the floor material with 'floor carpet' and the sofa material with
+'sofa green'.
 
 To open a material picker when an existing object in the scene is
 clicked, use the following `trigger` properties:
