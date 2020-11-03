@@ -1,3 +1,12 @@
+# Introduction
+
+Shapespark cloud API automates creation of WebGL 3D visualizations
+with realistic, baked lighting. The API accepts a 3D model in one of
+the popular formats: FBX, COLLADA, OBJ, GLTF and returns a link to a
+WebGL visualization created from the model. If you would like to try
+the API, get in touch with team@shapespark.com to discuss your use
+case and get API access tokens.
+
 # Upload format for the Shapespark API.
 
 ## Archive structure.
@@ -216,19 +225,63 @@ author text is clicked, it must start with `https://` or `http://`.
 
 ### `materialPickers` list
 
-Material pickers allow the user to replace one material in the scene
-with some other material. The material change action can be triggered
-by a click in any existing object in the scene or an additional sphere
-or sprite objects.
+Material pickers allow the user to replace materials in the scene with
+other materials. The material change action can be triggered by a
+click in any existing object in the scene or an additional sphere or
+sprite objects. The user is presented with a list of options to choose
+from. Each option can replace multiple materials in the
+scene, so it is possible to for example change floor and sofa
+materials with one selection.
 
 Each entry on the `materialPickers` list has the following properties
 
-+ `toReplace`: required, a name of a material in the scene to be
-replaced by the material picker.
-+ `toPick`: required, a list of names of materials in the scene to be
-shown to the user as replacement options.
++ `options`: required, a list of material replacements that should be
+  performed after the user selects one of the option.
 + `trigger`: required, an object that configures how the material
 picker is opened.
+
+Each element in the `options` list is a list of replacement
+operations. Each replacement operation has the following properties:
+
++ `toReplace`: required, a name of a material in the scene to be
+replaced when the option is selected.
++ `toUse`: required, a name of the material that should be used instead of the `toReplace` material.
+
+The following JSON shows an example of the options list.
+
+```
+ "options": [
+     [
+       {
+         "toReplace": "floor wood",
+         "toUse": "floor stone"
+       },
+       {
+         "toReplace": "sofa blue",
+         "toUse": "sofa red"
+       }
+     ],
+     [
+       {
+         "toReplace": "floor wood",
+         "toUse": "floor carpet"
+       },
+       {
+         "toReplace": "sofa blue",
+         "toUse": "sofa green"
+       }
+     ]
+   ]
+```
+
+This configuration will show a material picker with three selection
+spheres: The first sphere is for reverting the changes and applying
+the original materials, it doesn't require any JSON configuration
+entry. The second sphere applies the first selection option: replaces
+the floor material with 'floor stone' and the sofa material with 'sofa
+red'. The third sphere applies the second selection option: replaces
+the floor material with 'floor carpet' and the sofa material with
+'sofa green'.
 
 To open a material picker when an existing object in the scene is
 clicked, use the following `trigger` properties:
@@ -307,10 +360,6 @@ sepearators (`_` and `-`).
 The request must include the HTTP `Authorization` header with the user
 name and the secret token. The username and the token are created
 during the user registration.
-
-For testing the user name and the token from the
-`Users\[USER_NAME]\AppData\Shapespark\auth` file can be used.
-
 
 The result of the request is the following JSON object:
 

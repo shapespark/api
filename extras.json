@@ -276,10 +276,14 @@
         "type": "node",
         "nodeType" : "Metal cube"
       },
-      "toPick" : [
-        "Marble"
-      ],
-      "toReplace" : "Metal"
+      "options" : [
+        [
+          {
+            "toReplace" : "Metal",
+            "toUse": "Marble"
+          }
+        ]
+      ]
     },
     {
       "trigger" : {
@@ -293,10 +297,24 @@
         "radius" : 0.07,
         "type" : "sphere"
       },
-      "toPick" : [
-        "Metal"
-      ],
-      "toReplace" : "Marble"
+      "options": [
+        [
+          {
+            "toReplace" : "Marble",
+            "toUse" : "Metal"
+          },
+          {
+            "toReplace" : "Metal",
+            "toUse" : "Marble"
+          }
+        ],
+        [
+          {
+            "toReplace" : "Metal",
+            "toUse" : "Marble"
+          }
+        ]
+      ]
     }
   ]
 }
