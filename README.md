@@ -278,10 +278,10 @@ This configuration will show a material picker with three selection
 spheres: The first sphere is for reverting the changes and applying
 the original materials, it doesn't require any JSON configuration
 entry. The second sphere applies the first selection option: replaces
-the floor material with 'floor stone' and the sofa material with 'sofa
-red'. The third sphere applies the second selection option: replaces
-the floor material with 'floor carpet' and the sofa material with
-'sofa green'.
+the floor material with `floor stone` and the sofa material with `sofa
+red`. The third sphere applies the second selection option: replaces
+the floor material with `floor carpet` and the sofa material with
+`sofa green`.
 
 To open a material picker when an existing object in the scene is
 clicked, use the following `trigger` properties:
