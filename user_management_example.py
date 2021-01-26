@@ -48,7 +48,8 @@ def main():
 
     (client_id, token) = read_text_file(token_path).split(' ')
 
-    # Create a test user.
+    # Create a test user with the default subscription plan
+    # (use an optional parameter 'plan' to assign another).
     data = {
         'username': 'api-test',
         'email': 'api-test@shapespark.com',
