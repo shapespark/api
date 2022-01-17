@@ -85,6 +85,7 @@
       "name": "Top view",
       "mode": "top",
       "distance" : 3,
+      "maxDistance": 5,
       "rotation" : [-172.44, -90],
       "target" : [0, 0, 0]
     },
@@ -93,7 +94,8 @@
       "mode": "orbit",
       "rotation" : [ 173.74, -16.90],
       "target" : [0, 0, 0],
-      "distance": 3
+      "distance": 3,
+      "maxDistance": 8
     }
   ],
 

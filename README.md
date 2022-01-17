@@ -100,7 +100,9 @@ Properties specific for `orbit` and `top` views:
 
 + `target`: required, `[x,y,z]` coordinates of the target the camera
   is looking at.
-+ `distance`: required, distance of the camera from the target,
++ `distance`: required, initial distance of the camera from the target,
+  greater than `0`.
++ `maxDistance`: optional, maximum distance of the camera from the target,
   greater than `0`.
 + `minUpAngle`: for `orbit` views only, optional, minimum elevation
   angle of the camera, in `[-90, 90]` range, defaults to `-90`
