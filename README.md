@@ -47,7 +47,7 @@ to be included. Each entry has the following properties:
 + `metallicTexture`: optional, if set `metallic` property is ignored.
 + `bumpTexture`: optional.
 + `bumpScale`: used only when `bumpTexture` is set to scale it, optional,
-  in [-0.2,0.2] range, defautls to `0.001`. 
+  in [-0.2,0.2] range, defautls to `0.001`.
 + `emissionStrength`: optional, minimum value `0`, if set the
 material emits light.
 + `doubleSided`: optional, boolean, defaults to `false`, use sparingly
@@ -228,15 +228,20 @@ author text is clicked, it must start with `https://` or `http://`.
 ### `materialPickers` list
 
 Material pickers allow the user to replace materials in the scene with
-other materials. The material change action can be triggered by a
-click in any existing object in the scene or an additional sphere or
-sprite objects. The user is presented with a list of options to choose
-from. Each option can replace multiple materials in the
-scene, so it is possible to for example change floor and sofa
-materials with one selection.
+other materials. A material picker can be triggered by a click in:
+
++  any existing object in the scene,
++  additional sphere or sprite objects,
++  the sliders button in the bottom right corner of the viewer which opens
+   a menu with the list of all material pickers.
+
+A material picker presents the user with a list of options to choose from.
+Each option can replace multiple materials in the scene, so it is possible to
+for example change floor and sofa materials with one selection.
 
 Each entry on the `materialPickers` list has the following properties
 
++ `name`: required, the name of the material picker displayed in the menu.
 + `options`: required, a list of material replacements that should be
   performed after the user selects one of the option.
 + `trigger`: required, an object that configures how the material

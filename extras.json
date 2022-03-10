@@ -274,10 +274,22 @@
   "authorHref": "https://en.wikipedia.org/wiki/Cube",
   "materialPickers": [
     {
-      "trigger": {
-        "type": "node",
-        "nodeType" : "Metal cube"
-      },
+      "name": "Single material replacement",
+      "triggers": [
+        {
+          "type": "node",
+          "nodeType" : "Metal cube"
+        },
+        {
+          "type": "sprite",
+          "position" : [
+            -1,
+            -1,
+            -0.111155669113417
+          ],
+          "text": "Single replacement"
+        }
+      ],
       "options" : [
         [
           {
@@ -288,17 +300,22 @@
       ]
     },
     {
-      "trigger" : {
-        "type": "sphere",
-        "height" : 0.2,
-        "position" : [
-          1.45046216294895,
-          -0.58053286227248,
-          -0.111155669113417
-        ],
-        "radius" : 0.07,
-        "type" : "sphere"
-      },
+      "name": "Multi material replacement",
+      "triggers" : [
+        {
+          "type": "node",
+          "nodeType" : "Marble cube"
+        },
+        {
+          "type": "sphere",
+          "position" : [
+            1.45046216294895,
+            -0.58053286227248,
+            -0.111155669113417
+          ],
+          "radius" : 0.07
+        }
+      ],
       "options": [
         [
           {
