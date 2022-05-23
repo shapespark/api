@@ -62,12 +62,20 @@ color space, defaults to `[1,1,1]`.
 + `baseColorTexture`: optional, if set `baseColor` is ignored. Can be
 set to `null` to reset the base color texture setting from FBX.
 + `opacity`: optional, in `[0,1]` range, defaults to `1`.
++ `opacityForBaking`: optional, in `[0,1]` range, defaults to `opacity`,
+allows to set different opacity for the baking engine, so it is for
+example possible to have a fully opaque object in the scene that
+doesn't block light. If set to `0`, disables lightmap for objects
+with this material.
 
 Values for `roughnessTexture`, `metallicTexture` and `bumpTexture`
-are objects having only one property:
+are objects having properties:
 
-+ `fileName`: required, name of the file inside the archive
-
++ `fileName`: required, name of the file inside the archive.
++ `importAutoScale`: optional, boolean, enables auto scale
+texture resolution, defaults to `true`.
++ `importGpuCompress`: optional, boolean, enables GPU compression
+formats, defaults to `true`.
 
 [More detailed description of the material
 properties](https://www.shapespark.com/docs#materials-tab).
