@@ -528,6 +528,11 @@ Each list entry contains:
       "active": true or false
     }
 
+In addition: a `plan` property is present if the user has an active plan for
+a client that can assign different plans, and a `planExpirationDate` property
+in YYYY-MM-DD format is present if the user has an active plan with expiration
+date set.
+
 ## Activate a user.
 
 If a subscription plan was specified when a user was created,
@@ -547,8 +552,11 @@ JSON object like:
 
 where `true` value assigns perpetual license to the user, and `false` value
 assigns the default subscription plan.
-In the latter case, you can add an plan argument if the client doesn’t
-have a default plan or to overrie the default plan.
+In the latter case, you can add a `plan` argument if the client doesn’t
+have a default plan or to override the default plan. A plan expiration date
+can be specified with an optional `planExpirationDate` argument in YYYY-MM-DD
+format. If no expiration date is given the plan is assigned for indefinite
+period, until it's deactiated (see below).
 
 Lack of JSON is equivalent to assigning the default subscription plan.
 
