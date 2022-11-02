@@ -565,6 +565,14 @@ Lack of JSON is equivalent to assigning the default subscription plan.
 A user that cancels subscription should be deactivated with POST
 request to `https://cloud.shapespark.com/users/USERNAME/deactivate`.
 
+## Delete a user
+
+A user can be permanently deleted with DELETE request to
+`https://cloud.shapespark.com/users/USERNAME`.
+
+*Notice:* USERNAME stays reserved for the next 30 days and cannot
+be reused in this period.
+
 ## Change a user scene creation token.
 
 A POST request to
