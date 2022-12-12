@@ -196,6 +196,10 @@ settings. If `sky` is missing, the default sky settings are used, if
 defaults to `6`.
 + `color`: optional, three RGB values in `[0,1]` range, in linear
 color space, defaults to `[0.855,0.863,1]`.
++ `ambientLight`: optional, an object that configures ambient
+lighting parameters. If `ambientLight` is missing, default ambient lighting
+parameters are used, if `ambientLight` is set to null, ambient lighting is
+disabled.
 + `ambientOcclusion`: optional, an object that configures ambient
 occlusion parameters. If `ambientOcclusion` is missing, default ambient
 occlusion parameters are used, if `ambientOcclusion` is set to null,
@@ -204,10 +208,16 @@ ambient occlusion is disabled.
 sky texture that surrounds the scene. The texture is not used for
 baking.
 
+`ambientLight` has the following properties:
+
++ `strength` optional, a float that specifies how strong is the effect
+of ambient light, defaults to `0.05`. `0` is an equivalent of
+disabled ambient lighting.
+
 `ambientOcclusion` has the following properties:
 
-+ `factor` optional, a float that specifies how strong is the effect
-of ambient occlusion, defaults to `0.05`. `0` is an equivalent of
++ `intensity` optional, a float that specifies how strong is the effect
+of ambient occlusion, defaults to `0.5`. `0` is an equivalent of
 disabled ambient occlusion.
 + `distance` optional, a float that specific how far to search for
 occluders, greather than `0`, defaults to `1`. For example, a `distance`
