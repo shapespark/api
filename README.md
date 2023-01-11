@@ -210,19 +210,22 @@ rotation of the sky texture in degrees. Defaults to `0`.
 ### `ambientLight` object
 
 `ambientLight` is an optional object that configures ambient light parameters.
-If `ambientLight` is missing, default ambient light
-parameters are used, if `ambientLight` is set to null, ambient light is
-disabled.
+If `ambientLight` is missing, default ambient light is used, if `ambientLight` 
+is set to null, ambient light is disabled.
+
+The `ambientLight` object has the following properties:
 
 + `strength` optional, a float that specifies ambient light strength, 
-defaults to `0.05`. `0` is an equivalent of disabled ambient lighting.
+defaults to `0.05`. 
 
 ### `ambientOcclusion` object
 
-`ambientOcclusion`: is an optional object that configures ambient
+`ambientOcclusion` is an optional object that configures ambient
 occlusion parameters. If `ambientOcclusion` is missing, default ambient
 occlusion parameters are used, if `ambientOcclusion` is set to null,
 ambient occlusion is disabled.
+
+The `ambientOcclusion` object has the following properties:
 
 + `intensity` optional, a float that specifies how strong the effect
   of ambient occlusion is, defaults to `0.5`. 
