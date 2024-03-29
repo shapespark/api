@@ -564,13 +564,40 @@ JSON object like:
 
 where `true` value assigns perpetual license to the user, and `false` value
 assigns the default subscription plan.
-In the latter case, you can add a `plan` argument if the client doesn’t
+
+Lack of JSON is equivalent to assigning the default subscription plan.
+
+### Specifying the plan to activate
+
+You can add a `plan` argument to the JSON object if the client doesn’t
 have a default plan or to override the default plan. A plan expiration date
 can be specified with an optional `planExpirationDate` argument in YYYY-MM-DD
 format. If no expiration date is given the plan is assigned for indefinite
 period, until it's deactiated (see below).
 
-Lack of JSON is equivalent to assigning the default subscription plan.
+    {
+      "plan": string,
+      "planExpirationDate": "YYYY-MM-DD"
+    }
+
+#### Plan add-ons
+
+If the plan support add-ons you can optionally specify the addons to apply in
+the `planAddons` argument:
+
+    {
+      "plan": string,
+      "planAddons": [
+        {
+          "name": string,
+          "count": number
+        },
+        ...
+      ]
+    }
+
+where `name` gives the name of the add-on and `count` specifies how many times
+the add-on is applied.
 
 ## Deactivate a user
 
