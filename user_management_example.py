@@ -131,6 +131,12 @@ def main():
             print("   scane name: {0}; scene url: {1};".
                   format(scene['name'], scene['sceneUrl']));
 
+    # Delete the user.
+    url = SHAPESPARK_ROOT_URL + '/users/api-test-changed'
+    response = requests.delete(url, auth=(client_id, token))
+    if response.status_code != 204:
+        print('Failed to delete a user: {0}, {1}'.format(
+              response.status_code, response.text))
 
 
 main()
