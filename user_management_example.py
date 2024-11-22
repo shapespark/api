@@ -4,7 +4,10 @@ import sys
 import requests
 
 SHAPESPARK_ROOT_URL = 'https://cloud.shapespark.com'
-
+USERNAME = 'api-test'
+EMAIL = f'{USERNAME}@shapespark.com'
+USERNAME_CHANGED = USERNAME + '-changed'
+EMAIL_CHANGED = f'{USERNAME_CHANGED}@shapespark.com'
 
 def usage():
     print("""
@@ -51,11 +54,11 @@ def main():
     # Create a test user with the default subscription plan
     # (use an optional parameter 'plan' to assign another).
     data = {
-        'username': 'api-test',
-        'email': 'api-test@shapespark.com',
+        'username': USERNAME,
+        'email': EMAIL,
         'onlyValidate': False,
     }
-    url = SHAPESPARK_ROOT_URL + '/users/'
+    url = f'{SHAPESPARK_ROOT_URL}/users/'
     response = requests.post(url, json=data, auth=(client_id, token))
     if response.status_code != 200:
         print('Failed to create a test user: {0}, {1}'.format(
@@ -64,7 +67,7 @@ def main():
         print("Test user created. User token: " + response.json()['token'])
 
     # Get a list of users.
-    url = SHAPESPARK_ROOT_URL + '/users/'
+    url = f'{SHAPESPARK_ROOT_URL}/users/'
     response = requests.get(url, auth=(client_id, token))
     if response.status_code != 200:
         print('Failed to get a list of users: {0}, {1}'.format(
@@ -76,22 +79,22 @@ def main():
                   format(user['username'], user['email'], user['active']))
 
     # Deactivate the user (for example: subscription canceled).
-    url = SHAPESPARK_ROOT_URL + '/users/api-test/deactivate'
+    url = f'{SHAPESPARK_ROOT_URL}/users/{USERNAME}/deactivate'
     response = requests.post(url, auth=(client_id, token))
     if response.status_code != 204:
         print('Failed to deactivate a user: {0}, {1}'.format(
               response.status_code, response.text))
 
     # Activate the user again.
-    url = SHAPESPARK_ROOT_URL + '/users/api-test/activate'
+    url = f'{SHAPESPARK_ROOT_URL}/users/{USERNAME}/activate'
     response = requests.post(url, auth=(client_id, token))
     if response.status_code != 204:
         print('Failed to activate a user: {0}, {1}'.format(
               response.status_code, response.text))
 
-    url = SHAPESPARK_ROOT_URL + '/users/api-test/change-username'
+    url = f'{SHAPESPARK_ROOT_URL}/users/{USERNAME}/change-username'
     data = {
-        'username': 'api-test-changed',
+        'username': USERNAME_CHANGED,
     }
     response = requests.post(url, json=data, auth=(client_id, token))
     if response.status_code != 204:
@@ -100,9 +103,9 @@ def main():
     else:
         print("Test username changed.")
 
-    url = SHAPESPARK_ROOT_URL + '/users/api-test-changed/change-email'
+    url = f'{SHAPESPARK_ROOT_URL}/users/{USERNAME_CHANGED}/change-email'
     data = {
-        'email': 'api-test-changed@shapespark.com',
+        'email': EMAIL_CHANGED,
     }
     response = requests.post(url, json=data, auth=(client_id, token))
     if response.status_code != 204:
@@ -111,7 +114,7 @@ def main():
     else:
         print("Test user email changed.")
 
-    url = SHAPESPARK_ROOT_URL + '/users/api-test-changed/change-token'
+    url = f'{SHAPESPARK_ROOT_URL}/users/{USERNAME_CHANGED}/change-token'
     response = requests.post(url, auth=(client_id, token))
     if response.status_code != 200:
         print('Failed to change a user token: {0}, {1}'.format(
@@ -120,7 +123,7 @@ def main():
         print("Test user token changed: " + response.json()['token'])
 
     # Get a list of scenes created by the user.
-    url = SHAPESPARK_ROOT_URL + '/users/api-test-changed/scenes/'
+    url = f'{SHAPESPARK_ROOT_URL}/users/{USERNAME_CHANGED}/scenes/'
     response = requests.get(url, auth=(client_id, token))
     if response.status_code != 200:
         print('Failed to get a list of scenes: {0}, {1}'.format(
@@ -132,7 +135,7 @@ def main():
                   format(scene['name'], scene['sceneUrl']));
 
     # Delete the user.
-    url = SHAPESPARK_ROOT_URL + '/users/api-test-changed'
+    url = f'{SHAPESPARK_ROOT_URL}/users/{USERNAME_CHANGED}'
     response = requests.delete(url, auth=(client_id, token))
     if response.status_code != 204:
         print('Failed to delete a user: {0}, {1}'.format(
