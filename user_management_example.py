@@ -91,14 +91,6 @@ def main():
         print('Failed to activate a user: {0}, {1}'.format(
               response.status_code, response.text))
 
-    url = SHAPESPARK_ROOT_URL + '/users/api-test/change-token'
-    response = requests.post(url, auth=(client_id, token))
-    if response.status_code != 200:
-        print('Failed to change a user token: {0}, {1}'.format(
-              response.status_code, response.text))
-    else:
-        print("Test user token changed: " + response.json()['token'])
-
     url = SHAPESPARK_ROOT_URL + '/users/api-test/change-email'
     data = {
         'email': 'api-test-changed@shapespark.com',
@@ -109,6 +101,14 @@ def main():
               response.status_code, response.text))
     else:
         print("Test user email changed.")
+
+    url = SHAPESPARK_ROOT_URL + '/users/api-test/change-token'
+    response = requests.post(url, auth=(client_id, token))
+    if response.status_code != 200:
+        print('Failed to change a user token: {0}, {1}'.format(
+              response.status_code, response.text))
+    else:
+        print("Test user token changed: " + response.json()['token'])
 
     # Get a list of scenes created by the user.
     url = SHAPESPARK_ROOT_URL + '/users/api-test/scenes/'

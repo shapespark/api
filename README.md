@@ -612,19 +612,6 @@ A user can be permanently deleted with DELETE request to
 *Notice:* USERNAME stays reserved for the next 30 days and cannot
 be reused in this period.
 
-## Change a user scene creation token.
-
-A POST request to
-`https://cloud.shapespark.com/users/USERNAME/change-token` with an
-empty body changes the user token for creating scenes. On success the
-HTTP 200 code is returned together with a JSON object:
-
-    {
-      "token": NEW_USER_SCENE_CREATION_TOKEN
-    }
-
-After the request is made the previous token stops working.
-
 ## Change a user email.
 
 A POST request to
@@ -642,6 +629,19 @@ like:
     {
       "message": "Email already in use"
     }
+
+## Change a user scene creation token.
+
+A POST request to
+`https://cloud.shapespark.com/users/USERNAME/change-token` with an
+empty body changes the user token for creating scenes. On success the
+HTTP 200 code is returned together with a JSON object:
+
+    {
+      "token": NEW_USER_SCENE_CREATION_TOKEN
+    }
+
+After the request is made the previous token stops working.
 
 ## Get a list of scenes created by a user.
 
