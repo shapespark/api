@@ -612,6 +612,24 @@ A user can be permanently deleted with DELETE request to
 *Notice:* USERNAME stays reserved for the next 30 days and cannot
 be reused in this period.
 
+## Change a username.
+
+A POST request to
+`https://cloud.shapespark.com/users/USERNAME/change-username` changes the
+username of the user. The request needs to include a JSON with a new username:
+
+    {
+      "username": "bob",
+    }
+
+On success the request returns HTTP 204 code. On error the request
+returns 400 error code with a JSON that described the failure reason,
+like:
+
+    {
+      "message": "Username already in use"
+    }
+
 ## Change a user email.
 
 A POST request to
