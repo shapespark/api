@@ -462,7 +462,7 @@ version of the scene.
 ## DELETE a user scene
 
 DELETE request (also with the user `Authorization` header) to
-`https://cloud.shapespark.com/scenes/SCENE_NAME/` deletes a scene
+`https://cloud.shapespark.com/scenes/SCENE_NAME` deletes a scene
 created by the user.
 
 # The API for managing users.
