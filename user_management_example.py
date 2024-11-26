@@ -25,6 +25,20 @@ def read_text_file(file_path):
     with open(file_path, 'r', encoding='ascii') as f:
         return f.read()
 
+def format_error(error_response):
+    status_code = error_response.status_code
+    content_type = error_response.headers.get('Content-Type', '')
+    if content_type.startswith('application/json'):
+        error_json = error_response.json()
+        api_code = error_json.get('code')
+        message = error_json.get('message')
+    else:
+        api_code = None
+        message = error_response.text
+    if api_code is not None:
+        return f'{status_code} ({api_code}) {message}'
+    return f'{status_code} {message}'
+
 def main():
     try:
         optlist, _ = getopt.gnu_getopt(sys.argv[1:],
@@ -61,8 +75,7 @@ def main():
     url = f'{SHAPESPARK_ROOT_URL}/users/'
     response = requests.post(url, json=data, auth=(client_id, token))
     if response.status_code != 200:
-        print('Failed to create a test user: {0}, {1}'.format(
-               response.status_code, response.text))
+        print('Failed to create a test user: ' + format_error(response))
     else:
         print("Test user created. User token: " + response.json()['token'])
 
@@ -70,8 +83,7 @@ def main():
     url = f'{SHAPESPARK_ROOT_URL}/users/'
     response = requests.get(url, auth=(client_id, token))
     if response.status_code != 200:
-        print('Failed to get a list of users: {0}, {1}'.format(
-              response.status_code, response.text))
+        print('Failed to get a list of users: ' + format_error(response))
     else:
         print("All users list:")
         for user in response.json():
@@ -82,15 +94,13 @@ def main():
     url = f'{SHAPESPARK_ROOT_URL}/users/{USERNAME}/deactivate'
     response = requests.post(url, auth=(client_id, token))
     if response.status_code != 204:
-        print('Failed to deactivate a user: {0}, {1}'.format(
-              response.status_code, response.text))
+        print('Failed to deactivate a user: ' + format_error(response))
 
     # Activate the user again.
     url = f'{SHAPESPARK_ROOT_URL}/users/{USERNAME}/activate'
     response = requests.post(url, auth=(client_id, token))
     if response.status_code != 204:
-        print('Failed to activate a user: {0}, {1}'.format(
-              response.status_code, response.text))
+        print('Failed to activate a user: ' + format_error(response))
 
     url = f'{SHAPESPARK_ROOT_URL}/users/{USERNAME}/change-username'
     data = {
@@ -98,8 +108,7 @@ def main():
     }
     response = requests.post(url, json=data, auth=(client_id, token))
     if response.status_code != 204:
-        print('Failed to change a username: {0}, {1}'.format(
-              response.status_code, response.text))
+        print('Failed to change a username: ' + format_error(response))
     else:
         print("Test username changed.")
 
@@ -109,16 +118,14 @@ def main():
     }
     response = requests.post(url, json=data, auth=(client_id, token))
     if response.status_code != 204:
-        print('Failed to change a user email: {0}, {1}'.format(
-              response.status_code, response.text))
+        print('Failed to change a user email: ' + format_error(response))
     else:
         print("Test user email changed.")
 
     url = f'{SHAPESPARK_ROOT_URL}/users/{USERNAME_CHANGED}/change-token'
     response = requests.post(url, auth=(client_id, token))
     if response.status_code != 200:
-        print('Failed to change a user token: {0}, {1}'.format(
-              response.status_code, response.text))
+        print('Failed to change a user token: ' + format_error(response))
     else:
         print("Test user token changed: " + response.json()['token'])
 
@@ -126,8 +133,7 @@ def main():
     url = f'{SHAPESPARK_ROOT_URL}/users/{USERNAME_CHANGED}/scenes/'
     response = requests.get(url, auth=(client_id, token))
     if response.status_code != 200:
-        print('Failed to get a list of scenes: {0}, {1}'.format(
-              response.status_code, response.text))
+        print('Failed to get a list of scenes: ' + format_error(response))
     else:
         print("All users scenes:")
         for scene in response.json():
@@ -138,8 +144,7 @@ def main():
     url = f'{SHAPESPARK_ROOT_URL}/users/{USERNAME_CHANGED}'
     response = requests.delete(url, auth=(client_id, token))
     if response.status_code != 204:
-        print('Failed to delete a user: {0}, {1}'.format(
-              response.status_code, response.text))
+        print('Failed to delete a user: ' + format_error(response))
 
 
 main()
