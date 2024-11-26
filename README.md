@@ -210,13 +210,13 @@ rotation of the sky texture in degrees. Defaults to `0`.
 ### `ambientLight` object
 
 `ambientLight` is an optional object that configures ambient light parameters.
-If `ambientLight` is missing, default ambient light is used, if `ambientLight` 
+If `ambientLight` is missing, default ambient light is used, if `ambientLight`
 is set to null, ambient light is disabled.
 
 The `ambientLight` object has the following properties:
 
-+ `strength` optional, a float that specifies ambient light strength, 
-defaults to `0.05`. 
++ `strength` optional, a float that specifies ambient light strength,
+defaults to `0.05`.
 
 ### `ambientOcclusion` object
 
@@ -228,7 +228,7 @@ ambient occlusion is disabled.
 The `ambientOcclusion` object has the following properties:
 
 + `intensity` optional, a float that specifies how strong the effect
-  of ambient occlusion is, defaults to `0.5`. 
+  of ambient occlusion is, defaults to `0.5`.
 + `distance` optional, a float that specific how far to search for
   occluders, greather than `0`, defaults to `1`. For example, a `distance`
   `0.5` means that if there are no occluders within `0.5` meter from
@@ -677,3 +677,35 @@ returns a JSON list with following entries:
 DELETE request to
 `https://cloud.shapespark.com/users/USERNAME/scenes/SCENE_NAME/`
 deletes a scene created by the user.
+
+# The API for checking the user's plan.
+
+GET request with the HTTP `Authorization` header that contains the
+user name and the user token to `https://cloud.shapespark.com/plan` returns
+a JSON with the user's plan details like:
+
+    {
+      "name": PLAN_NAME,
+      "active": true or false,
+      "sceneCountLimit": SCENE_COUNT_LIMIT
+    }
+
+If the plan has an expiration date, the response additionally includes:
+
+    {
+      ...
+      "expirationDate": "YYYY-MM-DD",
+      "remainingLength": REMAINING_LENGTH
+    }
+
+and if the plan has addons, the response additionally includes:
+
+    {
+      ...
+      "addons": [
+        {
+          "name": ADDON_NAME,
+          "count": COUNT
+        }
+      ]
+    }
