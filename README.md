@@ -42,12 +42,12 @@ to be included. Each entry has the following properties:
 
 + `name`: required, must match material name from the `FBX`.
 + `roughness`: optional, in `[0,1]` range, defaults to `1`.
-+ `rougnessTexture`: optional, if set `roughness` property is ignored.
++ `roughnessTexture`: optional, if set `roughness` property is ignored.
 + `metallic`: optional, in `[0,1]` range, defaults to `1`.
 + `metallicTexture`: optional, if set `metallic` property is ignored.
 + `bumpTexture`: optional.
 + `bumpScale`: used only when `bumpTexture` is set to scale it, optional,
-  in [-0.2,0.2] range, defautls to `0.001`.
+  in [-0.2,0.2] range, defaults to `0.001`.
 + `emissionStrength`: optional, minimum value `0`, if set the
 material emits light.
 + `doubleSided`: optional, boolean, defaults to `false`, use sparingly
@@ -230,7 +230,7 @@ The `ambientOcclusion` object has the following properties:
 + `intensity` optional, a float that specifies how strong the effect
   of ambient occlusion is, defaults to `0.5`.
 + `distance` optional, a float that specific how far to search for
-  occluders, greather than `0`, defaults to `1`. For example, a `distance`
+  occluders, greater than `0`, defaults to `1`. For example, a `distance`
   `0.5` means that if there are no occluders within `0.5` meter from
   a given point in 3D space, the ambient occlusion has no effect on this point.
 
@@ -352,7 +352,7 @@ Each entry of the list corresponds to one panorama and has the following
 properties:
 
 + `name`: required, unique, must contain only lowercase letters (`a-z`),
-  digits (`0-9`) and sepearators (`_` and `-`).
+  digits (`0-9`) and separators (`_` and `-`).
 + `position`: optional, `[x,y,z]` coordinates of the panoramic camera,
   `z` axis is up, defaults to the initial camera position in the scene.
 + `rotation`: optional, yaw rotation for the initial looking direction at
@@ -382,7 +382,7 @@ This is an HTTP POST requests to
 `https://cloud.shapespark.com/scenes/[SCENE_NAME]/import-upload-init`
 
 `SCENE_NAME` can use lowercase letters (`a-z`), digits (`0-9`) and
-sepearators (`_` and `-`).
+separators (`_` and `-`).
 
 The request must include the HTTP `Authorization` header with the user
 name and the secret token. The username and the token are created
@@ -573,7 +573,7 @@ You can add a `plan` argument to the JSON object if the client doesn’t
 have a default plan or to override the default plan. A plan expiration date
 can be specified with an optional `planExpirationDate` argument in YYYY-MM-DD
 format. If no expiration date is given the plan is assigned for indefinite
-period, until it's deactiated (see below).
+period, until it's deactivated (see below).
 
     {
       "plan": string,
