@@ -23,6 +23,20 @@ def read_text_file(file_path):
     with open(file_path, 'r', encoding='ascii') as f:
         return f.read()
 
+def format_error(error_response):
+    status_code = error_response.status_code
+    content_type = error_response.headers.get('Content-Type', '')
+    if content_type.startswith('application/json'):
+        error_json = error_response.json()
+        api_code = error_json.get('code')
+        message = error_json.get('message')
+    else:
+        api_code = None
+        message = error_response.text
+    if api_code is not None:
+        return f'{status_code} ({api_code}) {message}'
+    return f'{status_code} {message}'
+
 def main():
     try:
         optlist, _ = getopt.gnu_getopt(sys.argv[1:],
@@ -61,8 +75,7 @@ def main():
     url = SHAPESPARK_ROOT_URL + '/users/'
     response = requests.post(url, json=data, auth=(client_id, token))
     if response.status_code != 200:
-        print('Failed to create a test user: {0}, {1}'.format(
-            response.status_code, response.text))
+        print('Failed to create a test user: ' + format_error(response))
     else:
         print("Test user created.")
 
@@ -73,7 +86,7 @@ def main():
     url = SHAPESPARK_ROOT_URL + '/users/test-user/activate'
     response = requests.post(url, json=data, auth=(client_id, token))
     if response.status_code != 204:
-        print('Failed to assign perpetual license to the user: {0}, {1}'.format(
-              response.status_code, response.text))
+        print('Failed to assign perpetual license to the user: ' +
+              format_error(response))
 
 main()

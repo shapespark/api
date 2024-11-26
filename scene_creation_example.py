@@ -27,6 +27,20 @@ def read_binary_file(file_path):
     with open(file_path, 'rb') as f:
         return f.read()
 
+def format_error(error_response):
+    status_code = error_response.status_code
+    content_type = error_response.headers.get('Content-Type', '')
+    if content_type.startswith('application/json'):
+        error_json = error_response.json()
+        api_code = error_json.get('code')
+        message = error_json.get('message')
+    else:
+        api_code = None
+        message = error_response.text
+    if api_code is not None:
+        return f'{status_code} ({api_code}) {message}'
+    return f'{status_code} {message}'
+
 def main():
     try:
         optlist, _ = getopt.gnu_getopt(sys.argv[1:],
@@ -66,8 +80,8 @@ def main():
         SHAPESPARK_ROOT_URL, scene_name)
     response = requests.post(url,auth=(username, token), verify=True)
     if response.status_code != 200:
-        raise Exception('POST import-upload-init failed: {0}, {1}'.format(
-            response.status_code, response.text))
+        raise Exception('POST import-upload-init failed: ' +
+                        format_error(response))
 
     put_url = response.json()['uploadUrl']
     data = read_binary_file(model_path)
@@ -80,8 +94,8 @@ def main():
         SHAPESPARK_ROOT_URL, scene_name)
     response = requests.post(url,auth=(username, token), verify=True)
     if response.status_code != 200:
-        raise Exception('POST import-upload-done failed: {0}, {1}'.format(
-            response.status_code, response.text))
+        raise Exception('POST import-upload-done failed: ' +
+                        format_error(response))
     else:
         print('Model uploaded for import. Wait for the import to finish at {0}'
               .format(response.json()['watchUrl']))
@@ -90,8 +104,8 @@ def main():
     url = '{0}/scenes/'.format(SHAPESPARK_ROOT_URL)
     response = requests.get(url,auth=(username, token), verify=True)
     if response.status_code != 200:
-        raise Exception('GET a list of scenes failed: {0}, {1}'.format(
-            response.status_code, response.text))
+        raise Exception('GET a list of scenes failed: ' +
+                        format_error(response))
 
     for scene in response.json():
         print(('  Scene: {0}\n\t watchUrl: {1}\n\t sceneUrl: {2}\n\t ' +

@@ -42,12 +42,12 @@ to be included. Each entry has the following properties:
 
 + `name`: required, must match material name from the `FBX`.
 + `roughness`: optional, in `[0,1]` range, defaults to `1`.
-+ `rougnessTexture`: optional, if set `roughness` property is ignored.
++ `roughnessTexture`: optional, if set `roughness` property is ignored.
 + `metallic`: optional, in `[0,1]` range, defaults to `1`.
 + `metallicTexture`: optional, if set `metallic` property is ignored.
 + `bumpTexture`: optional.
 + `bumpScale`: used only when `bumpTexture` is set to scale it, optional,
-  in [-0.2,0.2] range, defautls to `0.001`.
+  in [-0.2,0.2] range, defaults to `0.001`.
 + `emissionStrength`: optional, minimum value `0`, if set the
 material emits light.
 + `doubleSided`: optional, boolean, defaults to `false`, use sparingly
@@ -230,7 +230,7 @@ The `ambientOcclusion` object has the following properties:
 + `intensity` optional, a float that specifies how strong the effect
   of ambient occlusion is, defaults to `0.5`.
 + `distance` optional, a float that specific how far to search for
-  occluders, greather than `0`, defaults to `1`. For example, a `distance`
+  occluders, greater than `0`, defaults to `1`. For example, a `distance`
   `0.5` means that if there are no occluders within `0.5` meter from
   a given point in 3D space, the ambient occlusion has no effect on this point.
 
@@ -352,7 +352,7 @@ Each entry of the list corresponds to one panorama and has the following
 properties:
 
 + `name`: required, unique, must contain only lowercase letters (`a-z`),
-  digits (`0-9`) and sepearators (`_` and `-`).
+  digits (`0-9`) and separators (`_` and `-`).
 + `position`: optional, `[x,y,z]` coordinates of the panoramic camera,
   `z` axis is up, defaults to the initial camera position in the scene.
 + `rotation`: optional, yaw rotation for the initial looking direction at
@@ -370,19 +370,56 @@ by a `GET` request to
 `https://[USER_NAME].shapespark.com/[SCENE_NAME]/panoramas/[PANORAMA_NAME]`.
 The response for the request is a JPG file containing the panorama image.
 
-# The API for importing the model.
+# API requests
+
+## Errors
+
+In case of an error the API responds with a 4xx HTTP status code and a JSON
+object containing a human-readable message in English language:
+
+    {
+      "message": HUMAN_READABLE_ERROR_MESSAGE
+    }
+
+The following HTTP status codes are used by the API:
+
++ 401 (Unauthorized) - the request lacks valid authentication credentials
++ 403 (Forbidden) - the request contains valid authentication credentials, but
+  the client lacks permissions to perform the requested operation
++ 404 (Not found) - the entity (eg. user, scene) the request attempts to operate
+  on does not exist
++ 409 (Conflict) - the request conflicts with another request being processed
++ 400 (Bad request) - the request is invalid in another way, which usually means
+  it contains incorrect operation arguments
+
+The returned JSON objects may contain an additional `code` string property:
+
+    {
+      ...
+      "code": MACHINE_READABLE_CODE
+    }
+
+(eg. `"usernameInUse"` or `"sceneLimitExceeded"`) intended for machine
+processing or localizing error messages to languages other then English.
+
+The documentation below gives the list of the possible errors for each
+API request. The lists omit errors related to client authentication and
+permissions common to all the requests. These errors use HTTP 401 and 403 status
+codes, respectively.
+
+## The API for importing the model.
 
 [A script demonstrating how to use the API](scene_creation_example.py).
 
 To import the `.zip` archive with the model three HTTP requests need to be made.
 
-## POST import-upload-init request.
+### POST import-upload-init request.
 
 This is an HTTP POST requests to
 `https://cloud.shapespark.com/scenes/[SCENE_NAME]/import-upload-init`
 
 `SCENE_NAME` can use lowercase letters (`a-z`), digits (`0-9`) and
-sepearators (`_` and `-`).
+separators (`_` and `-`).
 
 The request must include the HTTP `Authorization` header with the user
 name and the secret token. The username and the token are created
@@ -394,7 +431,18 @@ The result of the request is the following JSON object:
       "uploadUrl": SIGNED_GOOGLE_STORAGE_BUCKET_URL
     }
 
-## PUT request
+#### Errors
+
++ 400 (Bad request) is returned with the following `code` property value:
+  + `"invalidSceneName"`
++ 403 (Forbidden), in addition to client permissions issues the HTTP 403 error
+  is returned with the following `code` property values:
+  + `"trialExpired"`
+  + `"sceneLimitExceeded"`
++ 409 (Conflict):
+  + `"importAlreadyRunning"`
+
+### PUT request
 
 The content of the `.zip` archive is uploaded with HTTP PUT request to
 the `uploadUrl` returned by the `import-upload-init` request.
@@ -402,7 +450,13 @@ the `uploadUrl` returned by the `import-upload-init` request.
 `uploadUrl` already contains signed authorization data, so no
 additional authorization header is needed.
 
-## POST import-upload-done
+#### Errors
+
+The PUT requests are handled directly by a cloud storage service, not by the
+Shapespark cloud API server, and use different error protocol. Errors usually
+mean temporary network or cloud infrastructure issues.
+
+### POST import-upload-done
 
 Last request is HTTP POST to
 `https://cloud.shapespark.com/scenes/[SCENE_NAME]/import-upload-done`
@@ -422,9 +476,14 @@ The request returns a JSON:
 The returned URL can be opened in a web browser and it will
 redirect the user to the scene after the import is finished.
 
-# The API for listing and deleting user's scenes.
+#### Errors
 
-## GET a list of user's scenes
++ 404 (Not found) is returned with the following `code` property value:
+  + `"sceneNotFound"`
+
+## The API for listing and deleting user's scenes.
+
+### GET a list of user's scenes
 
 GET request with the HTTP `Authorization` header that contains the
 user name and the user token to `https://cloud.shapespark.com/scenes/`
@@ -459,13 +518,22 @@ version of the scene.
 + favicon: `SCENE_ASSETS_URL + 'favicon.ico'`
 + panorama: `SCENE_ASSETS_URL + 'img/360/' + PANORAMA_NAME + '.jpg'`
 
-## DELETE a user scene
+#### Errors
+
+No errors other than related to authentication or permissions are returned.
+
+### DELETE a user scene
 
 DELETE request (also with the user `Authorization` header) to
 `https://cloud.shapespark.com/scenes/SCENE_NAME` deletes a scene
 created by the user.
 
-# The API for managing users.
+#### Errors
+
++ 404 (Not found) is returned with the following `code` property value:
+  + `"sceneNotFound"`
+
+## The API for managing users.
 
 [A script demonstrating how to use the user management
 API](user_management_example.py).
@@ -479,7 +547,7 @@ to perform operations that affect all users.
 A client is able to manage and see information only about users
 created by this client.
 
-## Create a new user.
+### Create a new user.
 
 POST request to `https://cloud.shapespark.com/users/` creates a new
 user. The request needs to include a JSON like:
@@ -512,22 +580,25 @@ The result of the request is a JSON object:
 The returned token can be passed to the user's machine to allow the
 user to create scenes.
 
-The request can also return 400 error if the username or email already
-exist or are invalid.
-
 If an optional `onlyValidate` parameter is present and set to `true`,
 the request doesn't create a new user, but checks if such user can be
 created - the username and email are correct and not yet used. If the
 user can be created the validation request returns HTTP 204 success
-code, otherwise it returns 400 error code with a JSON that includes
-the failure reason, like:
+code, otherwise it returns an error.
 
-    {
-      "message": "Username already in use"
-    }
+#### Errors
 
++ 400 (Bad request) is returned with the following `code` property values:
+  + `"jsonRequired"`
+  + `"jsonMalformed"`
+  + `"invalidUsername"`
+  + `"usernameInUse"`
+  + `"invalidEmail"`
+  + `"emailInUse"`
+  + `"unacceptablePassword"`
+  + `"invalidPlanName"`
 
-## List all users.
+### List all users.
 
 GET request to `https://cloud.shapespark.com/users/` lists all users
 created by the client.
@@ -545,7 +616,11 @@ a client that can assign different plans, and a `planExpirationDate` property
 in YYYY-MM-DD format is present if the user has an active plan with expiration
 date set.
 
-## Activate a user.
+#### Errors
+
+No errors other than related to authentication or permissions are returned.
+
+### Activate a user.
 
 If a subscription plan was specified when a user was created,
 activating the user is not necessary. This includes the scenario
@@ -567,20 +642,20 @@ assigns the default subscription plan.
 
 Lack of JSON is equivalent to assigning the default subscription plan.
 
-### Specifying the plan to activate
+#### Specifying the plan to activate
 
 You can add a `plan` argument to the JSON object if the client doesn’t
 have a default plan or to override the default plan. A plan expiration date
 can be specified with an optional `planExpirationDate` argument in YYYY-MM-DD
 format. If no expiration date is given the plan is assigned for indefinite
-period, until it's deactiated (see below).
+period, until it's deactivated (see below).
 
     {
       "plan": string,
       "planExpirationDate": "YYYY-MM-DD"
     }
 
-#### Plan add-ons
+##### Plan add-ons
 
 If the plan support add-ons you can optionally specify the addons to apply in
 the `planAddons` argument:
@@ -599,12 +674,44 @@ the `planAddons` argument:
 where `name` gives the name of the add-on and `count` specifies how many times
 the add-on is applied.
 
-## Deactivate a user
+#### Errors
+
++ 400 (Bad request) is returned with the following `code` property values:
+  + `"jsonRequired"`
+  + `"jsonMalformed"`
+  + `"invalidPlanName"`
+  + `"invalidPlanExpirationDate"`
+  + `"invalidPlanAddon"`
++ 403 (Forbidden), in addition to client permissions issues the HTTP 403 error
+  is returned with the following `code` property value:
+  + `"sceneLimitExceeded"`
++ 404 (Not found):
+  + `"userNotFound"`
+
+### Deactivate a user
 
 A user that cancels subscription should be deactivated with POST
 request to `https://cloud.shapespark.com/users/USERNAME/deactivate`.
 
-## Delete a user
+The request may contain an optional JSON with `planExpirationDate`:
+
+    {
+      "planExpirationDate": "YYYY-MM-DD"
+    }
+
+If the plan expiration date is not given, the subscription is deactivated
+immediately.
+
+#### Errors
+
++ 400 (Bad request) is returned with the following `code` property values:
+  + `"jsonRequired"`
+  + `"jsonMalformed"`
+  + `"invalidPlanExpirationDate"`
++ 404 (Not found):
+  + `"userNotFound"`
+
+### Delete a user
 
 A user can be permanently deleted with DELETE request to
 `https://cloud.shapespark.com/users/USERNAME`.
@@ -612,7 +719,12 @@ A user can be permanently deleted with DELETE request to
 *Notice:* USERNAME stays reserved for the next 30 days and cannot
 be reused in this period.
 
-## Change a username.
+#### Errors
+
++ 404 (Not found) is returned with the following `code` property value:
+  + `"userNotFound"`
+
+### Change a username.
 
 A POST request to
 `https://cloud.shapespark.com/users/USERNAME/change-username` changes the
@@ -622,15 +734,17 @@ username of the user. The request needs to include a JSON with a new username:
       "username": "bob",
     }
 
-On success the request returns HTTP 204 code. On error the request
-returns 400 error code with a JSON that described the failure reason,
-like:
+#### Errors
 
-    {
-      "message": "Username already in use"
-    }
++ 400 (Bad request) is returned with the following `code` property values:
+  + `"jsonRequired"`
+  + `"jsonMalformed"`
+  + `"invalidUsername"`
+  + `"usernameInUse"`
++ 404 (Not found):
+  + `"userNotFound"`
 
-## Change a user email.
+### Change a user email.
 
 A POST request to
 `https://cloud.shapespark.com/users/USERNAME/change-email` changes the
@@ -640,15 +754,17 @@ user email. The request needs to include a JSON with a new email:
       "email": "alice@example.org",
     }
 
-On success the request returns HTTP 204 code. On error the request
-returns 400 error code with a JSON that described the failure reason,
-like:
+#### Errors
 
-    {
-      "message": "Email already in use"
-    }
++ 400 (Bad request) is returned with the following `code` property values:
+  + `"jsonRequired"`
+  + `"jsonMalformed"`
+  + `"invalidEmail"`
+  + `"emailInUse"`
++ 404 (Not found):
+  + `"userNotFound"`
 
-## Change a user scene creation token.
+### Change a user scene creation token.
 
 A POST request to
 `https://cloud.shapespark.com/users/USERNAME/change-token` with an
@@ -661,7 +777,12 @@ HTTP 200 code is returned together with a JSON object:
 
 After the request is made the previous token stops working.
 
-## Get a list of scenes created by a user.
+#### Errors
+
++ 404 (Not found) is returned with the following `code` property value:
+  + `"userNotFound"`
+
+### Get a list of scenes created by a user.
 
 GET request to `https://cloud.shapespark.com/users/USERNAME/scenes/
 returns a JSON list with following entries:
@@ -671,14 +792,24 @@ returns a JSON list with following entries:
       "sceneUrl": SCENE_URL
      }
 
+#### Errors
 
-## Delete a scene created by a user.
++ 404 (Not found) is returned with the following `code` property value:
+  + `"userNotFound"`
+
+### Delete a scene created by a user.
 
 DELETE request to
 `https://cloud.shapespark.com/users/USERNAME/scenes/SCENE_NAME/`
 deletes a scene created by the user.
 
-# The API for checking the user's plan.
+#### Errors
+
++ 404 (Not found) is returned with the following `code` property values:
+  + `"userNotFound"`
+  + `"sceneNotFound"`
+
+## The API for checking the user's plan.
 
 GET request with the HTTP `Authorization` header that contains the
 user name and the user token to `https://cloud.shapespark.com/plan` returns
@@ -709,3 +840,7 @@ and if the plan has addons, the response additionally includes:
         }
       ]
     }
+
+### Errors
+
+No errors other than related to authentication or permissions are returned.
