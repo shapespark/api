@@ -604,6 +604,15 @@ the add-on is applied.
 A user that cancels subscription should be deactivated with POST
 request to `https://cloud.shapespark.com/users/USERNAME/deactivate`.
 
+The request may contain an optional JSON with `planExpirationDate`:
+
+    {
+      "planExpirationDate": "YYYY-MM-DD"
+    }
+
+If the plan expiration date is not given, the subscription is deactivated
+immediately.
+
 ## Delete a user
 
 A user can be permanently deleted with DELETE request to
