@@ -782,6 +782,28 @@ After the request is made the previous token stops working.
 + 404 (Not found) is returned with the following `code` property value:
   + `"userNotFound"`
 
+### Change a user logo.
+
+A POST request to `https://cloud.shapespark.com/users/USERNAME/logo`
+changes the user logo URL displayed in the scene viewer. To set a new logo
+the request needs to include a JSON with the logo's HTTPS URL:
+
+    {
+      "logoUrl": "https://example.com/logo.svg",
+    }
+
+To remove the logo the request needs to include empty JSON:
+    {}
+
+#### Errors
+
++ 400 (Bad request) is returned with the following `code` property values:
+  + `"jsonRequired"`
+  + `"jsonMalformed"`
+  + `"invalidLogoUrl"`
++ 404 (Not found):
+  + `"userNotFound"`
+
 ### Get a list of scenes created by a user.
 
 GET request to `https://cloud.shapespark.com/users/USERNAME/scenes/
