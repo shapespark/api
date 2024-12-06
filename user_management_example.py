@@ -129,6 +129,16 @@ def main():
     else:
         print("Test user token changed: " + response.json()['token'])
 
+    url = f'{SHAPESPARK_ROOT_URL}/users/{USERNAME_CHANGED}/logo'
+    data = {
+        'logoUrl': 'https://example.com/logo.svg',
+    }
+    response = requests.post(url, json=data, auth=(client_id, token))
+    if response.status_code != 204:
+        print('Failed to set a user logo: ' + format_error(response))
+    else:
+        print("Test user logo set.")
+
     # Get a list of scenes created by the user.
     url = f'{SHAPESPARK_ROOT_URL}/users/{USERNAME_CHANGED}/scenes/'
     response = requests.get(url, auth=(client_id, token))
