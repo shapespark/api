@@ -139,7 +139,10 @@ Sets the optional camera settings and initial camera placement. The
 initial camera placement is used only if the `views` list is empty:
 
 + `fov`: optional, field of view in degrees in `[1,179]` range, defaults to `70`.
-+ `exposure`: optional, camera exposure in `[-3,3]` range, defaults to `0`.
++ `autoExposure`: optional, boolean, enables automatic dynamic exposure
+  adjustment based on brightness of the current frame, defaults to `false`.
++ `exposure`: optional, static camera exposure in `[-3,3]` range, ignored when
+  `autoExposure` is enabled, defaults to `0`.
 + `position`: optional, `[x,y,z]` coordinates, `z` axis is up, defaults
   to the center of the scene.
 + `rotation`: optional, `[yaw,pitch]` of the camera in degrees,
